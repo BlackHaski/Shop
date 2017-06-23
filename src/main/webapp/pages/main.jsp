@@ -3,16 +3,16 @@
         <aside class="float-l border box-sizing-box clear-b text-align-l width20p mar0-pad0 height-auto bg-white">
             <nav class="height-auto">
                 <ul class="mar0-pad0 height-auto left-nav">
-                    <c:forEach var="section" items="${sections}">
-                        <li class="aside-nav-li border-b">
-                            <a class="link font-size-14px text-decor-none color-white bg-black">${section.getName()}</a>
-                            <c:if test="${!section.getCategories().isEmpty()}">
-                                <c:forEach var="category" items="${section.getCategories()}">
-                                    <a href="#" class="link text-decor-none font-size-14px color-black">${category.getName()}</a>
-                                </c:forEach>
-                            </c:if>
-                        </li>
-                    </c:forEach>
+                    <%--<c:forEach var="section" items="${sections}">--%>
+                        <%--<li class="aside-nav-li border-b">--%>
+                            <%--<a class="link font-size-14px text-decor-none color-white bg-black">${section.getName()}</a>--%>
+                            <%--<c:if test="${!section.getCategories().isEmpty()}">--%>
+                                <%--<c:forEach var="category" items="${section.getCategories()}">--%>
+                                    <%--<a href="#" class="link text-decor-none font-size-14px color-black">${category.getName()}</a>--%>
+                                <%--</c:forEach>--%>
+                            <%--</c:if>--%>
+                        <%--</li>--%>
+                    <%--</c:forEach>--%>
                 </ul>
             </nav>
         </aside>
