@@ -1,0 +1,17 @@
+.block-cont {
+    height: 500px;
+    margin: 1% 1%;
+    border: 5px solid #3E5370;
+    background: #007785;
+    line-height: 35px;
+}
+.block-cont h2{
+    background: white;
+    border-radius: 10px;
+    font-size: 25px;
+    text-align: center;
+}
+.head-block{
+    line-height: 70px;
+    background: rgb(38, 65, 90) ;
+}

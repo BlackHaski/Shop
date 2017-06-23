@@ -1,0 +1,9 @@
+.text {
+    font-size: 18px;
+    line-height: 25px;
+    font-family: "DejaVu Sans";
+    text-align: justify;
+}
+.border-r-gray{
+    border-right: 3px solid gray;
+}
