@@ -67,10 +67,7 @@ nav{
     display: block;
     width: 100%;
     line-height: 40px;
-}
-.aside-nav-li a{
-    padding-left: 10%;
-    width:90%;
+    height: 40px;
 }
 .good {
     text-align: center;
@@ -140,6 +137,9 @@ h2 {
 .display-i-b{
     display: inline-block;
 }
+.display-b{
+    display: block;
+}
 .text-align-r{
     text-align: right;
 }
@@ -177,6 +177,9 @@ h2 {
 .padding-r-5p{
     padding-right:5%;
 }
+.padding-l-10p{
+    padding-left:10%;
+}
 .width100p{
     width: 100%;
 }
@@ -209,6 +212,9 @@ h2 {
 }
 .width20p{
     width: 20%;
+}
+.width10p{
+    width: 10%;
 }
 .width23p{
     width: 23%;
@@ -257,4 +263,7 @@ h2 {
 }
 .text-decor-none{
     text-decoration: none;
+}
+.vertical-al-mid{
+    vertical-align: middle;
 }

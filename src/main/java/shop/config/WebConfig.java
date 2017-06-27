@@ -37,6 +37,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         + "Shop" + File.separator + "src" + File.separator
                         + "main" + File.separator + "webapp" + File.separator
                         + "images" + File.separator);
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("/scripts/");
     }
 
 }

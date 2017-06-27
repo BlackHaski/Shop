@@ -2,10 +2,8 @@ package shop.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by blackhaski on 23.06.17.
@@ -13,13 +11,21 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@ToString(exclude = "products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+    private int categoryId;
     private int parentId;
+    private String categoryName;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy = "category")
+    private List<Product> products = null;
+
+    public Category(String categoryName, int parentId) {
+        this.categoryName = categoryName;
+        this.parentId = parentId;
+    }
 }

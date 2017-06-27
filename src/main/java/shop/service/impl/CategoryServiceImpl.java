@@ -19,11 +19,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryDAO categoryDAO;
 
-    public List<Category> findAll() {
-        return categoryDAO.findAll();
+    public List<Category> findAllWithoutProducts(){
+        return categoryDAO.findAllWithoutProducts();
     }
 
     public void save(Category category) {
         categoryDAO.save(category);
     }
+
 }
