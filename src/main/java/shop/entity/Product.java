@@ -1,5 +1,6 @@
 package shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +13,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString(exclude = "images,comments,category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -34,6 +34,7 @@ public class Product {
     private List<Image> images = new ArrayList<Image>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "product")
     private List<Comment> comments = new ArrayList<Comment>();
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     private Category category;
 

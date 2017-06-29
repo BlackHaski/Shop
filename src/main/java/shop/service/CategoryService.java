@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface CategoryService {
     void save(Category category);
-    List<Category> findAllWithoutProducts();
+    List<Category> findAll();
+    void delete(int id);
 }

@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/css/about.css">
     <link rel="stylesheet" type="text/css" href="/css/contacts.css">
     <link rel="stylesheet" type="text/css" href="/css/registration.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
     <title>Main</title>
 </head>
 <body class="mar0-pad0 width100p height-auto">

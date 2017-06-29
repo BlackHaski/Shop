@@ -1,8 +1,10 @@
 package shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +23,9 @@ public class Category {
     private int categoryId;
     private int parentId;
     private String categoryName;
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH, mappedBy = "category")
-    private List<Product> products = null;
+    private List<Product> products = new ArrayList<Product>();
 
     public Category(String categoryName, int parentId) {
         this.categoryName = categoryName;
