@@ -1,0 +1,42 @@
+.headCart p{
+    color: #777c88;
+    font-size: 10px;
+}
+.productCart{
+    height: 100px;
+    line-height: 100px;
+    padding: 15px 0;
+}
+.productCart img {
+    padding-top: 15px;
+    padding-right: 60px;
+}
+.productCart{
+    color: #9daabb;
+}
+.productCart h1{
+    font-size: 20px;
+}
+.subtotal{
+    width: 12%;
+}
+.subtotal p{
+    font-size: 18px;
+    color: #9daabb;
+    padding: 20px 0;
+
+}
+.subtotal button {
+    width: 100%;
+    font-size: 15px;
+    padding: 25px 35px;
+    background: #272727;
+    color: #FFF8E6;
+    line-height: 0px;
+    border: none;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+.subtotal button:hover {
+    background: #1fa086;
+}

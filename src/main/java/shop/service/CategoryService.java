@@ -9,6 +9,14 @@ import java.util.List;
  */
 public interface CategoryService {
     void save(Category category);
+
     List<Category> findAll();
+
     void delete(int id);
+
+    void updateNameById(int id, String newName);
+
+    void updateParentId(int id, int newParentId);
+
+
 }

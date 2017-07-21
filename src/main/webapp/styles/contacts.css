@@ -1,17 +1,39 @@
-.block-cont {
-    height: 500px;
-    margin: 1% 1%;
-    border: 5px solid #3E5370;
-    background: #007785;
+.headContact h1{
+    font-size: 23px;
+}
+.headContact p{
+    font-size: 18px;
+    color: #9fa8b7;
     line-height: 35px;
 }
-.block-cont h2{
-    background: white;
-    border-radius: 10px;
-    font-size: 25px;
+form h1{
+    font-size: 23px;
     text-align: center;
 }
-.head-block{
-    line-height: 70px;
-    background: rgb(38, 65, 90) ;
+.contactForm input,textarea{
+    font-size: 14px;
+    border: 1px solid #ccc;
+    line-height: normal;
+    padding: 12px 0 12px 12px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+.contactForm input[type="submit"],.contactForm input[type="button"]{
+    font-size: 16px;
+    padding: 20px 35px;
+    background: #0bb8fc;
+    color: #FFF8E6;
+    line-height: 0px;
+    border: none;
+    transition: 0.3s;
+}
+.contactForm input[type="submit"]:hover,.contactForm input[type="button"]:hover{
+    background: #088cc0;
+}
+.headInp{
+    clear: both;
+    padding: 3px 0;
+    margin: 0 0;
+    font-size: 18px;
+    color: #9fa8b7;
 }

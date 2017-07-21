@@ -23,17 +23,20 @@ public class WebInit implements WebApplicationInitializer {
                         .addServlet("dispatcherServlet", dispatcherServlet);
         servletRegistration.setLoadOnStartup(1);
         servletRegistration.addMapping("/");
+        servletRegistration.setMultipartConfig(new MultipartConfigElement("",10000000,10000000,10000000));
+
+
 
         CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
         encodingFilter.setEncoding("utf-8");
         encodingFilter.setForceEncoding(true);
+
         FilterRegistration.Dynamic filterRegistration =
                 servletContext
                     .addFilter("encodingFilter",encodingFilter);
-
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD);
+        filterRegistration.addMappingForUrlPatterns(dispatcherTypes, true, "/");
 
-        filterRegistration.addMappingForUrlPatterns(dispatcherTypes, true,"/*");
     }
 
 }

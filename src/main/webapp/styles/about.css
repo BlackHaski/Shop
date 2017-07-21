@@ -1,8 +1,9 @@
 .text {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 25px;
-    font-family: "DejaVu Sans";
+    font-family: Arimo;
     text-align: justify;
+    color: #9fa8b7;
 }
 .border-r-gray{
     border-right: 3px solid gray;

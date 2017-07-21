@@ -1,0 +1,43 @@
+.addBtn {
+    font-size: 15px;
+    padding: 25px 35px;
+    background: #30D3AB;
+    color: #FFF8E6;
+    line-height: 0px;
+    border: none;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.addBtn:hover {
+    background: #1fa086;
+}
+
+.prodDesc {
+    color: #FFF8E6;
+    line-height: 30px;
+}
+
+.characters {
+    padding: 0 18px;
+}
+
+.prodImg {
+    position: relative;
+}
+.prodImg img {
+    position: absolute;
+}
+
+.goodRatingImg {
+    left: 90%;
+    top: 10px;
+}
+
+.badRatingImg {
+    left: 95%;
+    top: 10px;
+}
+.margin-top-580px{
+    margin-top: 580px;
+}

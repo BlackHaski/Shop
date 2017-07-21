@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminController {
     @GetMapping("/admin")
     public String initAdmin() {
-        return "admin";
+        return "admin/admin";
+    }
+
+    @GetMapping("/editCategory")
+    public String getCategories() {
+
+        return "/admin/categories";
     }
 }

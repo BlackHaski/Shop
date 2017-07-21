@@ -1,38 +1,46 @@
-function Category(categoryName,parentId) {
-    this.categoryId = 0;
+$(function () {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+});
+
+function Category(id,categoryName,parentId) {
+    this.categoryId = id;
     this.categoryName = categoryName;
     this.parentId = parentId;
 }
-$("#aCategory").click(
-    function () {
+function showCategories() {
+    $("#adminContent").load("/editCategory",function () {
         $.ajax({
             url: "/show",
             method: "get",
             success: function (categories) {
                 $("main").removeClass("hide");
-                let $categories = $("#categories");
-                $categories.empty();
-                console.log(categories);
-                $(categories).each(function () {
-                    $categories.append('<ul>'+
-                                        '<li class="categoryId">'+
-                                            '<p>'+ `${this.categoryId}` +'</p>'
-                                        + '</li>'+
+                let result = sort(categories,categories[0]);
+                $("#categories").empty();
+                $(result).each(function () {
+                    $("#categories").append('<ul class="categoryList">'+
+                        '<li class="categoryId">'+
+                        '<p>'+ `${this.categoryId}` +'</p>'
+                        + '</li>'+
 
-                                        '<li class="categoryName">'+
-                                            '<p>'+ `${this.categoryName}` +'</p>'
-                                        + '</li>'+
-                                        '<li class="parentId">'+
-                                            '<p>'+ `${this.parentId}`+
-                                                '<span id="'+ `${this.categoryId}` + '"class="bg-red delete hide">×</span>'+
-                                            '</p>'
-                                        + '</li>'+
-                                    '</ul>');
-                })
+                        '<li class="categoryName">'+
+                        '<p>'+ `${this.categoryName}` +'</p>'
+                        + '</li>'+
+                        '<li class="parentId">'+
+                        '<p>'+ `${this.parentId}`+
+                        '<span id="'+ `${this.categoryId}` + '"class="bg-black delete hide">×</span>'+
+                        '</p>'
+                        + '</li>'+
+                        '</ul>'
+                    );
+                });
             }
         });
-    }
-);
+    });
+}
 $("#addCategory").click(
     function () {
         $.ajax({
@@ -63,7 +71,7 @@ $(".cancel").click(function () {
 $("#save").click(function () {
     let name = $("#categoryName").val();
     let pId = $("#parentId").val();
-    let obj = new Category(name,pId);
+    let obj = new Category(0,name,pId);
     let jsonObj = JSON.stringify(obj);
     $.ajax({
         url: "/saveCategory",
@@ -71,6 +79,7 @@ $("#save").click(function () {
         contentType: "application/json",
         data : jsonObj,
         success : function () {
+            showCategories();
             console.log(jsonObj);
             clearAll();
         }
@@ -81,13 +90,17 @@ $("#deleteCategory").click(function () {
     $(".delete").removeClass("hide");
     $("#deletebtn").removeClass("hide");
 });
+var counter = 0;
 $(document).on('click','.delete',function () {
-    $(this).parent().parent().parent().addClass("bg-blue");
-    $(this).attr("delete","true");
-});
-$(document).on('dblclick','.delete',function () {
-    $(this).parent().parent().parent().removeClass("bg-blue");
-    $(this).attr("delete","false");
+    if (counter == 0) {
+        $(this).parent().parent().parent().addClass("bg-red");
+        $(this).attr("delete", "true");
+        counter++;
+    }else {
+        $(this).parent().parent().parent().removeClass("bg-red");
+        $(this).attr("delete", "false");
+        counter = 0;
+    }
 });
 $("#save2").click(function () {
     let indexes=[];
@@ -103,16 +116,79 @@ $("#save2").click(function () {
             method : "post",
             contentType: "application/json",
             data : jsonIndexes,
-        });
-        clearAll();
-    }
+            success : function () {
+                clearAll();
+                showCategories();
+            }
+        });}
 });
+
+var $copyCategLi;
+$(document).on('dblclick',".categoryName,.parentId",function () {
+    clearAll()
+    $("#changename").removeClass("hide");
+    $copyCategLi = $(this).clone(true, true);
+    let myPlaceholder;
+    if ($(this).hasClass("categoryName")){
+        myPlaceholder = "Enter name";
+    }else if ($(this).hasClass("parentId")){
+        myPlaceholder = "Enter parent id";
+    }
+    $(this).children().replaceWith($('<input/>', {type: 'text', placeholder: myPlaceholder}));
+});
+$(document).on('keypress',"ul li input",function (event) {
+   if (event.keyCode == 13){
+       if($copyCategLi.hasClass("categoryName")) {
+           let $name = $(this).val();
+           let $pId = $(this).parent().next().text();
+           let $id = $(this).parent().prev().text();
+           clearAll();
+           let category = new Category($id, $name, $pId[0]);
+           let jsonObj = JSON.stringify(category);
+           if ($name != "") {
+               console.log(jsonObj);
+               $copyCategLi.children("p").text($name);
+               $(this).parent().replaceWith($($copyCategLi).clone(true, true));
+               $.ajax({
+                   url: "/changeName",
+                   method: "post",
+                   contentType: "application/json",
+                   data: jsonObj
+               });
+               clearAll();
+           }
+       }else if ($copyCategLi.hasClass("parentId")){
+           let $pId = $(this).val();
+           let $name = $(this).parent().prev().text();
+           let $id = $(this).parent().prev().prev().text();
+           clearAll();
+           if ($pId != "") {
+               let category = new Category($id, $name, $pId[0]);
+               let jsonObj = JSON.stringify(category);
+               console.log(jsonObj);
+               $copyCategLi.children("p").text($pId);
+               $(this).parent().replaceWith($($copyCategLi).clone(true, true));
+               $.ajax({
+                   url: "/changeParentId",
+                   method: "post",
+                   contentType: "application/json",
+                   data: jsonObj
+               });
+               clearAll();
+           }
+       }
+   }
+});
+
 function clearAll() {
     let $buttons = $("#savebtn");
     $buttons.addClass("hide");
     $buttons.prev("#inputsCreate").empty();
     $(".delete").addClass("hide");
     $("#deletebtn").addClass("hide");
-    $("main ul").removeClass("bg-blue");
+    $("main ul").removeClass("bg-red");
     $(".delete").attr("delete","false");
+    $(".categoryList li:nth-child(2)").removeClass("bg-green");
+    $("#changename").addClass("hide");
+    $("ul li input").parent().replaceWith($($copyCategLi));
 }

@@ -27,6 +27,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDAO.delete(id);
     }
 
+    public void updateNameById(int id, String newName) {
+        categoryDAO.updateNameById(id,newName);
+    }
+
+    public void updateParentId(int id, int newParentId) {
+        categoryDAO.updateParentId(id, newParentId);
+    }
+
     public void save(Category category) {
         categoryDAO.save(category);
     }

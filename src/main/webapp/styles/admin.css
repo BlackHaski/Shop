@@ -1,7 +1,7 @@
 .hide{
     display: none;
 }
-button{
+.button{
     height: 42px;
     font-weight: bold;
     border: none;
@@ -9,16 +9,9 @@ button{
     color: white;
     transition: 0.3s;
 }
-button:hover{
+.button:hover{
     background: white;
     color: black;
-    border-bottom: 3px solid #58AE59;
-}
-button:first-child{
-    border-top-left-radius: 10px;
-}
-button:last-child{
-    border-top-right-radius: 10px;
 }
 main ul{
     list-style: none;
@@ -28,7 +21,7 @@ main ul{
     float: left;
     text-align: center;
     clear: both;
-    background: #58AE59;
+    background: #33688E;
 }
 main ul li {
     display: inline-block;
@@ -38,7 +31,6 @@ main ul li {
     height: 30px;
     font-weight: bold;
     font-size: 16px;
-    border-bottom: 3px solid white;
     line-height: 30px;
 }
 main ul li p{
@@ -46,8 +38,18 @@ main ul li p{
     margin: 0 0;
 }
 main ul li input{
-    height: 100%;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    line-height: normal;
+    height: 30px;
+    padding: 0 0 0 12px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    float: left;
     width: 100%;
+}
+.categoryList li:nth-child(2), .categoryList li:nth-child(3){
+    background: #1FA1F8;
 }
 .delete{
     float: right;
@@ -57,18 +59,6 @@ main ul li input{
     line-height: 100%;
     font-size: 25px;
 
-}
-.bg-green{
-    background: #58AE59;
-}
-.bg-red{
-    background: #CC3C3B;
-}
-.bg-yellow{
-    background: #EB9F41;
-}
-.bg-blue{
-    background: #3679AD;
 }
 .height-22px{
     height: 22px;

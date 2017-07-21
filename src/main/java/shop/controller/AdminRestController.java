@@ -15,11 +15,11 @@ import java.util.List;
  */
 
 @RestController
-public class MyRestController {
+public class AdminRestController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("show")
+    @GetMapping("/show")
     public List<Category> show() {
         return categoryService.findAll();
     }
@@ -34,5 +34,15 @@ public class MyRestController {
         for (int i = 0; i < ids.length; i++) {
             categoryService.delete(ids[i]);
         }
+    }
+
+    @PostMapping("/changeName")
+    public void changeName(@RequestBody Category category) {
+        categoryService.updateNameById(category.getCategoryId(),category.getCategoryName());
+    }
+
+    @PostMapping("/changeParentId")
+    public void changeParentId(@RequestBody Category category){
+        categoryService.updateParentId(category.getCategoryId(),category.getParentId());
     }
 }

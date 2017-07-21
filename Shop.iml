@@ -6,6 +6,8 @@
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/shop/config/DataConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/shop/config/WebConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/shop/config/SecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/shop/config/SecurityInit.java</file>
         </fileset>
       </configuration>
     </facet>
