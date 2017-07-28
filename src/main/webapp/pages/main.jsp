@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="templates/header.jsp" %>
-<aside class="float-l box-sizing-box clear-b text-align-l width20p mar0-pad0 height-auto bg-white">
+<aside class="float-l box-sizing-box clear-b text-align-l width20p mar0-pad0 height-auto bg-black">
     <nav class="height-auto">
         <ul class="mar0-pad0 height-auto left-nav">
             <li class="aside-nav-li mar0-pad0">
@@ -12,90 +12,21 @@
 </aside>
 
 <main class="float-r margin-bottom-1p box-sizing-box height-auto bg-black width80p">
-    <div class="width100p display-i-b">
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
+    <div class="width100p display-i-b text-align-c">
+        <button class="login-btn width50p bg-black">
+            <a href="createProductPage" class="width100p display-b">Add Product</a>
+        </button>
     </div>
-    <div class="width100p display-i-b margin-top-30px">
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-    </div>
-    <div class="width100p display-i-b margin-top-30px">
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-    </div>
-    <div class="width100p display-i-b margin-top-30px">
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-    </div>
-    <div class="width100p display-i-b margin-top-30px">
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
-        <div class="width30p good height-auto float-l">
-            <img src="../images/good.png">
-            <p>Опис: Name this product</p>
-            <h2>1500$</h2>
-        </div>
+    <div class="width100p display-i-b ">
+        <c:if test="${currentProducts != null}">
+            <c:forEach var="product" items="${currentProducts}">
+                <a href="product-${product.productName}" class="width30p display-b text-decor-none good height-auto float-l">
+                    <img src="${product.images[0]}">
+                    <p>Name: ${product.productName}</p>
+                    <h2>${product.price}</h2>
+                </a>
+            </c:forEach>
+        </c:if>
     </div>
 
 </main>

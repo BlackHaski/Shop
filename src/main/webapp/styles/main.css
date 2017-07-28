@@ -70,6 +70,7 @@ nav{
     text-align: center;
     margin-left: 2%;
     transition: 0.3s;
+    margin-top: 20px;
 }
 .good:hover {
     background: #33688E;
@@ -93,6 +94,9 @@ nav{
 }
 .display-i-b{
     display: inline-block;
+}
+.display-i-f{
+    display: inline-flex;
 }
 .display-b{
     display: block;

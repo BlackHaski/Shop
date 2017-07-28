@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import shop.entity.Role;
-import shop.entity.User;
-import shop.entity.UserInfo;
+import shop.entity.security.Role;
+import shop.entity.security.User;
+import shop.entity.security.UserInfo;
 import shop.service.UserService;
 
 import java.util.Date;

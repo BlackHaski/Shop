@@ -3,7 +3,7 @@
 
 <div class="margin-l-2p">
     <div class="width100p prodDesc float-l">
-        <div class="float-l width62p"/>
+        <div class="float-l width62p">
             <p class="prodImg">
                 <img src="/images/empty2.png" width="826px" height="550px">
                 <img src="/images/goodRating.png" class="goodRatingImg" width="30px" height="30px">

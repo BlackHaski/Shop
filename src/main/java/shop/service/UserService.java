@@ -1,7 +1,7 @@
 package shop.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import shop.entity.User;
+import shop.entity.security.User;
 
 import java.util.List;
 

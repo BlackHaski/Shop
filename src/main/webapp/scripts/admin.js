@@ -12,6 +12,9 @@ function Category(id,categoryName,parentId) {
     this.parentId = parentId;
 }
 function showCategories() {
+    $("#adminContent").empty();
+    $("#categories").empty();
+
     $("#adminContent").load("/editCategory",function () {
         $.ajax({
             url: "/show",
@@ -19,7 +22,6 @@ function showCategories() {
             success: function (categories) {
                 $("main").removeClass("hide");
                 let result = sort(categories,categories[0]);
-                $("#categories").empty();
                 $(result).each(function () {
                     $("#categories").append('<ul class="categoryList">'+
                         '<li class="categoryId">'+
@@ -41,7 +43,7 @@ function showCategories() {
         });
     });
 }
-$("#addCategory").click(
+$(document).on("click","#addCategory",
     function () {
         $.ajax({
             success : function () {
@@ -61,14 +63,14 @@ $("#addCategory").click(
         });
     }
 );
-$(".cancel").click(function () {
+$(document).on("click",".cancel",function () {
     $.ajax({
         success : function () {
             clearAll();
         }
     });
 });
-$("#save").click(function () {
+$(document).on("click","#save",function () {
     let name = $("#categoryName").val();
     let pId = $("#parentId").val();
     let obj = new Category(0,name,pId);
@@ -85,7 +87,7 @@ $("#save").click(function () {
         }
     });
 });
-$("#deleteCategory").click(function () {
+$(document).on("click","#deleteCategory",function () {
     clearAll();
     $(".delete").removeClass("hide");
     $("#deletebtn").removeClass("hide");
@@ -102,7 +104,7 @@ $(document).on('click','.delete',function () {
         counter = 0;
     }
 });
-$("#save2").click(function () {
+$(document).on("click","#save2",function () {
     let indexes=[];
     $(".delete").each(function () {
         if ($(this).attr("delete")== "true"){

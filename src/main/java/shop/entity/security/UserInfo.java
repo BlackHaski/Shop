@@ -1,7 +1,9 @@
-package shop.entity;
+package shop.entity.security;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import shop.entity.products.Comment;
+import shop.entity.products.Rating;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -6,7 +6,12 @@ function sort(categories, curr) {
     if (categories.length == 0) {
         return res;
     }else {
-        if (cats.length == 0) cats = categories.slice();
+        if (cats.length == 0) {
+            res = [];
+            parent = null;
+            child = null;
+            cats = categories.slice();
+        }
         if (categories.indexOf(curr) != -1) {
             categories.splice(categories.indexOf(curr), 1);
         }
@@ -14,6 +19,7 @@ function sort(categories, curr) {
             res.push(curr);
         }
         if (categories.length == 0) {
+            cats = [];
             return res;
         } else {
             for (let i = 0; i < cats.length; i++) {
@@ -42,7 +48,8 @@ function sort(categories, curr) {
                     }
                 }
             }
-            return res;
         }
     }
+    cats = [];
+    return res;
 }

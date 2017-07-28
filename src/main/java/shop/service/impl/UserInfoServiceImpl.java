@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.dao.UserInfoDAO;
-import shop.entity.UserInfo;
+import shop.entity.security.UserInfo;
 import shop.service.UserInfoService;
 
 import java.io.File;

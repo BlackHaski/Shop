@@ -1,6 +1,6 @@
 package shop.service;
 
-import shop.entity.UserInfo;
+import shop.entity.security.UserInfo;
 
 public interface UserInfoService {
     int changeUserAvatar(int idUser, String path);

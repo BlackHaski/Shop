@@ -17,4 +17,6 @@ public interface CategoryDAO extends JpaRepository<Category, Integer> {
     @Modifying
     @Query("update Category set parentId =:newParentId where categoryId=:id")
     void updateParentId(@Param("id") int id,@Param("newParentId")int newParentId);
+
+    Category findByCategoryName(String name);
 }

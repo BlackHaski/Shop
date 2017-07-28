@@ -1,4 +1,4 @@
-package shop.entity;
+package shop.entity.security;
 
 /**
  * Created by blackhaski on 26.06.17.

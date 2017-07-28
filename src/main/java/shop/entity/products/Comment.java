@@ -1,6 +1,7 @@
-package shop.entity;
+package shop.entity.products;
 
 import lombok.*;
+import shop.entity.security.User;
 
 import javax.persistence.*;
 import java.util.Date;

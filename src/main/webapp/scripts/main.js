@@ -7,8 +7,9 @@ $(document).ready(function () {
                 for (let i = 0; i < result.length; i++) {
                     let category = result[i];
                     let clone = $("aside nav ul li:first-child").clone(true,true);
-                    if (category.parentId == 0) clone.children().addClass("bg-red");
                     clone.children("a").text(category.categoryName);
+                    let path = "category-"+category.categoryName;
+                    clone.children("a").attr("href",path);
                     $("aside nav ul").append(clone);
                 }
                 $("aside nav ul li:first-child").remove();

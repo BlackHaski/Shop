@@ -18,5 +18,9 @@ public interface CategoryService {
 
     void updateParentId(int id, int newParentId);
 
+    Category findOne(int id);
+
+    Category findByCategoryName(String name);
+
 
 }

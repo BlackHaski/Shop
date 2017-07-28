@@ -35,6 +35,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDAO.updateParentId(id, newParentId);
     }
 
+    public Category findOne(int id) {
+        return categoryDAO.findOne(id);
+    }
+
+    public Category findByCategoryName(String name) {
+        return categoryDAO.findByCategoryName(name);
+    }
+
     public void save(Category category) {
         categoryDAO.save(category);
     }

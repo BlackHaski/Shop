@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import shop.entity.User;
+import shop.entity.security.User;
 import shop.service.UserInfoService;
 import shop.service.UserService;
 

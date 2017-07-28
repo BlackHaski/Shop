@@ -66,6 +66,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                         + File.separator+"Programming"+File.separator
                         + "JavaComplex" + File.separator
                         + "avatars" + File.separator);
+        registry.addResourceHandler("/productImages/**")
+                .addResourceLocations("file:"+System.getProperty("user.home")
+                        + File.separator+"Programming"+File.separator
+                        + "JavaComplex" + File.separator
+                        + "productImages" + File.separator);
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("/scripts/");
     }

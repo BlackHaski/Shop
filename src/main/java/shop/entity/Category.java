@@ -2,6 +2,7 @@ package shop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import shop.entity.products.Product;
 
 import javax.persistence.*;
 import java.util.ArrayList;
