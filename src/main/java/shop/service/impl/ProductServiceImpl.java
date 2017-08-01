@@ -30,8 +30,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product findAllByProductName(String productName) {
-        return productDAO.findAllByProductName(productName);
+    public Product findByProductName(String productName) {
+        return productDAO.findByProductName(productName);
     }
 
 }

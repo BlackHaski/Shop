@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import shop.entity.security.User;
+import shop.service.CommentService;
 import shop.service.ProductService;
+import shop.service.RatingService;
 import shop.service.UserService;
 
 /**
@@ -21,6 +23,10 @@ public class InitController {
     UserService userService;
     @Autowired
     ProductService productService;
+    @Autowired
+    CommentService commentService;
+    @Autowired
+    RatingService ratingService;
 
     @GetMapping("/")
     public String start() {
@@ -50,8 +56,7 @@ public class InitController {
     }
 
     @GetMapping("/product-{productName}")
-    public String product(@PathVariable("productName") String productName,Model model) {
-        model.addAttribute("currentProduct", productService.findAllByProductName(productName));
+    public String product() {
         return "product";
     }
 

@@ -19,8 +19,8 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
-    private int posRating;
-    private int negRating;
+    private int posRating=0;
+    private int negRating=0;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Product product;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)

@@ -1,6 +1,5 @@
 package shop.service;
 
-import org.springframework.data.repository.query.Param;
 import shop.entity.products.Product;
 
 import java.util.List;
@@ -10,8 +9,9 @@ public interface ProductService {
 
     void save(Product product);
 
-    List<Product> findAllByCategoryName(@Param("categoryName") String categoryName);
+    List<Product> findAllByCategoryName(String categoryName);
 
-    Product findAllByProductName(String productName);
+    Product findByProductName(String productName);
+
 
 }

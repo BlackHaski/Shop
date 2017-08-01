@@ -5,32 +5,27 @@
     <div class="width100p prodDesc float-l">
         <div class="float-l width62p">
             <p class="prodImg">
-                <img src="/images/empty2.png" width="826px" height="550px">
-                <img src="/images/goodRating.png" class="goodRatingImg" width="30px" height="30px">
-                <img src="/images/badRating.png" class="badRatingImg" width="30px" height="30px">
+                <img id="mainProductImg" width="826px" height="550px">
+                <div class="ratingImg text-align-c display-i-b">
+                    <img src="/images/goodRating.png" width="30px" height="30px">
+                    <p id="posRating" class="mar0-pad0"></p>
+                </div>
+                <div class="ratingImg text-align-c display-i-b">
+                    <img src="/images/badRating.png" width="30px" height="30px">
+                    <p id="negRating" class="mar0-pad0"></p>
+                </div>
             </p>
-            <div class="width100p margin-top-580px text-align-c">
-                <img src="/images/empty2.png" width="12%" height="67px">
-                <img src="/images/empty2.png" width="12%" height="67px">
-                <img src="/images/empty2.png" width="12%" height="67px">
-                <img src="/images/empty2.png" width="12%" height="67px">
+            <div id="productImagesContainer" class="width100p margin-top-530px text-align-c">
+                    <img width="12%" class="margin-l-2p margin-r-2p" height="67px">
             </div>
         </div>
         <div class="margin-l-2p float-l width34p">
             <div class="float-l margin-l-2p">
-                <h1 class="color-white">Name product</h1>
-                <h2 class="color-green">Price</h2>
+                <h1 id="productNameH" class="color-white"></h1>
+                <h2 id="productPriceH" class="color-green"></h2>
                 <ul class="characters">
-                    <li>Lorem: Ipsum</li>
-                    <li>Lorem: Ipsum</li>
-                    <li>Lorem: Ipsum</li>
-                    <li>Lorem: Ipsum</li>
                 </ul>
-                <p>
-                    Give yourself an edge over the competition with this custom line-based icon set that is essential
-                    for every iOS app designer & developer. The icons follow the standard guidelines of Apple and work
-                    perfectly for iOS apps. This set also includes a glyph version of the icons, perfect for selected
-                    states within the iOS tab bar.
+                <p id="productDescrP">
                 </p>
                 <button class="addBtn">ADD TO CART</button>
             </div>
@@ -52,5 +47,5 @@
         </form>
     </div>
 </div>
-
+<script src="/js/product.js"></script>
 <%@include file="templates/footer.jsp" %>

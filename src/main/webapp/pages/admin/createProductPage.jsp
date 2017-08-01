@@ -41,5 +41,5 @@
         </form>
     </div>
 </div>
-<script src="/js/adminProducts.js"></script>
+<script src="/js/adminCreateProducts.js"></script>
 <%@include file="../templates/footer.jsp" %>

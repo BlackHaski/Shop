@@ -1,7 +1,6 @@
 package shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,8 +9,6 @@ import shop.entity.Category;
 import shop.service.CategoryService;
 import shop.service.ProductService;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,29 +49,4 @@ public class AdminRestController {
         categoryService.updateParentId(category.getCategoryId(),category.getParentId());
     }
 
-    @PostMapping("/getProductTypes")
-    public List<String> getProductTypes(){
-        List<String> types = productService.findProductTypes();
-        return types;
-    }
-
-    @PostMapping("/getIndividualCharact")
-    public List<String> getIndividualCharact(@RequestBody String name, Model model) {
-        String path = "shop.entity.products." + name;
-        String resultPath = path.replaceAll("\"","");
-        Class entity = null;
-        try {
-            entity = Class.forName(resultPath);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Field[] fields = entity.getDeclaredFields();
-        List<String> listFields = new ArrayList<String>();
-        for (Field field : fields) {
-            listFields.add(field.getName());
-        }
-        System.out.println(listFields);
-        model.addAttribute("tableName",name);
-        return listFields;
-    }
 }

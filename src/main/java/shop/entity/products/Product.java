@@ -34,10 +34,12 @@ public abstract class Product {
     private int soldOut = 0;
     private int count;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "product")
     private List<Rating> ratings = new ArrayList<Rating>();
     @ElementCollection(fetch = FetchType.EAGER,targetClass = String.class)
     private List<String> images = new ArrayList<String>();
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "product")
     private List<Comment> comments = new ArrayList<Comment>();
     @JsonIgnore

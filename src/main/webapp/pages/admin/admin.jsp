@@ -22,6 +22,5 @@
 </main>
 
 <script src="/js/functions.js"></script>
-<script src="/js/admin.js"></script>
-<script src="/js/adminProducts.js"></script>
+<script src="/js/adminCabinet.js"></script>
 <%@include file="../templates/footer.jsp"%>
