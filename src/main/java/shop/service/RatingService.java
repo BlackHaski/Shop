@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface RatingService {
 
-    List<Rating> findByProduct(Product product);
+    List<Rating> findAllByProductWithUser(Product product);
 
+    Rating findByProductProductNameAndUserUsername(String productName, String username);
+
+    void save(Rating rating);
+
+    void delete(Rating rating);
 }

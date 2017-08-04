@@ -24,7 +24,7 @@ public class User implements UserDetails{
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
-    private UserInfo userInfo;
+    private UserInfo userInfo = null;
 
     public User() {
     }

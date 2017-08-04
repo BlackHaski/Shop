@@ -44,7 +44,7 @@ public abstract class Product {
     private List<Comment> comments = new ArrayList<Comment>();
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
-    private Category category;
+    private Category category = null;
 
     public Product(String productName, int price, double rebate, String descr, int count, Category category, List<String> images) {
         this.productName = productName;

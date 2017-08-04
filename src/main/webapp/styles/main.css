@@ -89,6 +89,13 @@ nav{
     margin: 10px 0 0 0;
     color: #FFF8E6;
 }
+.popupWindow{
+    position: fixed;
+    top: 95%;
+    left: 40%;
+    padding: 5px 0;
+    display: none;
+}
 .box-sizing-box{
     box-sizing: border-box;
 }

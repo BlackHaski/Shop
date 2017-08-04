@@ -23,8 +23,8 @@ public class Comment {
     private String text;
     private Date date;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
-    private Product product;
+    private Product product = null;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    private User user;
+    private User user = null;
 
 }

@@ -6,6 +6,7 @@ import shop.entity.products.Comment;
 import shop.entity.products.Rating;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,13 +25,13 @@ public class UserInfo {
     private Role role = Role.ROLE_USER;
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
-    private List<Rating> ratings;
+    private List<Rating> ratings = new ArrayList<>();
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private User user;
+    private User user = null;
 
     public UserInfo() {
     }

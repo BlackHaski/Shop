@@ -7,15 +7,15 @@
             <p class="prodImg">
                 <img id="mainProductImg" width="826px" height="550px">
                 <div class="ratingImg text-align-c display-i-b">
-                    <img src="/images/goodRating.png" width="30px" height="30px">
+                    <img name="posRatingImg" src="/images/goodRating.png" width="30px" height="30px">
                     <p id="posRating" class="mar0-pad0"></p>
                 </div>
                 <div class="ratingImg text-align-c display-i-b">
-                    <img src="/images/badRating.png" width="30px" height="30px">
+                    <img name="negRatingImg" src="/images/badRating.png" width="30px" height="30px">
                     <p id="negRating" class="mar0-pad0"></p>
                 </div>
             </p>
-            <div id="productImagesContainer" class="width100p margin-top-530px text-align-c">
+            <div id="productImagesContainer" class="width100p margin-top-510px text-align-c">
                     <img width="12%" class="margin-l-2p margin-r-2p" height="67px">
             </div>
         </div>

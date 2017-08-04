@@ -1,5 +1,6 @@
 package shop.entity.products;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import shop.entity.security.User;
 
@@ -11,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString(exclude = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,11 +19,20 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
-    private int posRating=0;
-    private int negRating=0;
+    private boolean posRating = false;
+    private boolean negRating = false;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    private Product product;
+    private Product product = null;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    private User user;
+    private User user = null;
 
+    public Rating(boolean rating, Product product, User user) {
+        if (rating)
+            this.posRating = true;
+        else
+            this.negRating = true;
+        this.product = product;
+        this.user = user;
+    }
 }

@@ -34,4 +34,5 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo findByUserId(int id) {
         return userInfoDAO.findByUserId(id);
     }
+
 }

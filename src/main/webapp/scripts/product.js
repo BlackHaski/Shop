@@ -18,14 +18,12 @@ $(document).ready(function () {
             let posRating = 0;
             let negRating = 0;
 
-            for (var rating in result.ratings) {
-                if (rating.posRating == 0)
+            for (let key in result.ratings) {
+                if (result.ratings[key].posRating == false)
                     negRating++;
                 else
                     posRating++;
             }
-
-            console.log(result);
             $("#productNameH").text(result.product.productName);
             $("#productPriceH").text(result.product.price);
             $("#productDescrP").text(result.product.descr);
@@ -40,6 +38,7 @@ $(document).ready(function () {
                 $(cloneImg).attr("src", imgPath);
                 $("#productImagesContainer").append($(cloneImg));
             }
+            console.log(result);
             delete result.product.count;
             delete result.product.descr;
             delete result.product.images;
@@ -50,12 +49,76 @@ $(document).ready(function () {
             delete result.product.rebate;
             delete result.product.soldOut;
 
-            console.log(result.product.length)
             for (let key in result.product) {
                 let li = $("<li/>");
-                li.text(key+":"+result.product[key]);
+                li.text(key + ":" + result.product[key]);
                 $(".characters").append(li);
             }
         }
     });
 });
+$(document).on("click", "#productImagesContainer img", function () {
+    $("#mainProductImg").attr("src", this.getAttribute("src"));
+});
+var typeAnsw = "";
+$("img[name = 'posRatingImg'],img[name = 'negRatingImg']").click(function () {
+        let val = 0;
+        if ($(this).attr("name") == "posRatingImg") {
+            changeRating(true);
+        } else {
+            changeRating(false);
+        }
+    }
+);
+
+function changeRatingOnPage(type) {
+    switch (type){
+        case "savetrue": {
+            val = Number($("#posRating").text()) + 1;
+            $("#posRating").text(val);
+            break;
+        }
+        case "savefalse": {
+            val = Number($("#negRating").text()) + 1;
+            $("#negRating").text(val);
+            break;
+        }
+        case "deletetrue": {
+            val = Number($("#posRating").text()) - 1;
+            $("#posRating").text(val);
+            break;
+        }
+        case "deletefalse": {
+            val = Number($("#negRating").text()) - 1;
+            $("#negRating").text(val);
+            break;
+        }
+        case "anonim": {
+            $(".popupWindow").css("display","block");
+            setTimeout(function () {
+                $(".popupWindow").css("display","none");
+            },5000);
+            break;
+        }
+        default:break;
+    }
+}
+
+function changeRating(type) {
+    let pathname = window.location.pathname;
+    let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
+    let params = {
+        nameP: nameProduct,
+        rating: type
+    };
+    $.ajax({
+        url: "/setProductRating",
+        method: "post",
+        contentType: "application/json",
+        data: JSON.stringify(params),
+        success: function (success) {
+            typeAnsw = success;
+            changeRatingOnPage(typeAnsw);
+        }
+    });
+}
