@@ -9,11 +9,13 @@ import shop.entity.products.Comment;
 import shop.entity.products.Product;
 import shop.entity.products.Rating;
 import shop.entity.security.User;
+import shop.functions.Cart;
 import shop.service.CommentService;
 import shop.service.ProductService;
 import shop.service.RatingService;
 import shop.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -99,8 +101,21 @@ public class ProductRestController {
                 ratingService.delete(currentRating);
                 return result + type;
             }
-        }else {
+        } else {
             return "anonim";
         }
     }
+
+    @PostMapping("/addToCartProduct")
+    public boolean addToCartProduct(@RequestBody Map<String, String> params, Principal principal, HttpSession httpSession) {
+        if (principal == null) {
+            return false;
+        } else {
+            Cart cart = (Cart) httpSession.getAttribute("cart");
+            cart.addToCart(productService.findByProductName(params.get("nameProduct")),
+                    Integer.parseInt(params.get("countProduct")));
+            return true;
+        }
+    }
 }
+

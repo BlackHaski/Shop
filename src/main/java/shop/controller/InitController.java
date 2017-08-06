@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import shop.entity.security.User;
+import shop.functions.Cart;
 import shop.service.CommentService;
 import shop.service.ProductService;
 import shop.service.RatingService;
@@ -17,7 +18,7 @@ import shop.service.UserService;
  * Created by blackhaski on 21.06.17.
  */
 @Controller
-@SessionAttributes(names = "user")
+@SessionAttributes({"user","cart","cartProducts"})
 public class InitController {
     @Autowired
     UserService userService;
@@ -52,6 +53,8 @@ public class InitController {
     @GetMapping("/login")
     public String loginUser(Model model) {
         model.addAttribute("isLogin", true);
+        Cart cart = new Cart();
+        model.addAttribute("cart",cart);
         return "registration/registration";
     }
 
@@ -61,7 +64,9 @@ public class InitController {
     }
 
     @GetMapping("/shopcart")
-    public String shopcart() {
+    public String shopcart(Model model) {
+        Cart cart = (Cart) model.asMap().get("cart");
+        model.addAttribute("cartProducts", cart.getProducts());
         return "shopcart";
     }
 

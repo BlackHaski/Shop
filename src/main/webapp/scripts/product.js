@@ -94,10 +94,7 @@ function changeRatingOnPage(type) {
             break;
         }
         case "anonim": {
-            $(".popupWindow").css("display","block");
-            setTimeout(function () {
-                $(".popupWindow").css("display","none");
-            },5000);
+            showPopupWindow();
             break;
         }
         default:break;
@@ -122,3 +119,24 @@ function changeRating(type) {
         }
     });
 }
+
+$("#addToCart").click(function () {
+    let pathname = window.location.pathname;
+    let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
+    let count = $("#countProduct").val();
+    let params = {
+        nameProduct : nameProduct,
+        countProduct : count
+    };
+    $.ajax({
+        url:"/addToCartProduct",
+        method:"post",
+        contentType:"application/json",
+        data:JSON.stringify(params),
+        success:function (response) {
+            if (response == false){
+                showPopupWindow();
+            }
+        }
+    });
+});

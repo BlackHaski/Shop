@@ -53,3 +53,9 @@ function sort(categories, curr) {
     cats = [];
     return res;
 }
+function showPopupWindow() {
+    $(".popupWindow").css("display","block");
+    setTimeout(function () {
+        $(".popupWindow").css("display","none");
+    },5000);
+}

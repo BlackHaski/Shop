@@ -13,28 +13,19 @@
             <p>PRICE</p>
         </div>
     </div>
-    <div class="clear-b border-t productCart border-b">
-        <div class="height-auto width5p float-l">
-            <p class="float-l mar0-pad0">×</p>
+    <c:forEach var="product" items="${cartProducts}">
+        <div class="clear-b border-t productCart border-b">
+            <div class="height-auto width5p float-l">
+                <p id="deleteProductFromCart" class="float-l mar0-pad0">×</p>
+            </div>
+            <div class="height-auto width65p float-l">
+                <img src="${product.key.images.get(0)}" class="float-l" height="70px" width="100px">
+                <h1 class="mar0-pad0">${product.key.productName}</h1>
+            </div>
+            <div class="float-l width20p height-auto">${product.value}</div>
+            <div class="float-l width10p height-auto">${product.key.price}</div>
         </div>
-        <div class="height-auto width65p float-l">
-            <img src="/images/empty2.png" class="float-l" height="70px" width="100px">
-            <h1 class="mar0-pad0">Name product</h1>
-        </div>
-        <div class="float-l width20p height-auto">count</div>
-        <div class="float-l width10p height-auto">5000$</div>
-    </div>
-    <div class="clear-b productCart border-b">
-        <div class="height-auto width5p float-l">
-            <p class="float-l mar0-pad0">×</p>
-        </div>
-        <div class="height-auto width65p float-l">
-            <img src="/images/empty2.png" class="float-l" height="70px" width="100px">
-            <h1 class="mar0-pad0">Name product</h1>
-        </div>
-        <div class="float-l width20p height-auto">count</div>
-        <div class="float-l width10p height-auto">5000$</div>
-    </div>
+    </c:forEach>
     <div class="clear-b float-r subtotal">
         <div>
             <p class="float-l">Subtotal </p>

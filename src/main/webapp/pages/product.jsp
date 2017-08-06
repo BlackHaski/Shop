@@ -27,7 +27,11 @@
                 </ul>
                 <p id="productDescrP">
                 </p>
-                <button class="addBtn">ADD TO CART</button>
+                <div class="height-22px">
+                    <p class="color-gray height-auto float-l font-size-14px mar0-pad0 margin-r-2p">COUNT</p>
+                    <input id="countProduct" type="number" class="float-l width20p height-auto margin-l-2p font-size-14px" value="1" min="1" max="50">
+                </div>
+                <button id="addToCart" class="addBtn clear-b">ADD TO CART</button>
             </div>
         </div>
     </div>
@@ -47,5 +51,6 @@
         </form>
     </div>
 </div>
+<script src="/js/functions.js"></script>
 <script src="/js/product.js"></script>
 <%@include file="templates/footer.jsp" %>
