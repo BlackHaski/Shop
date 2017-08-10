@@ -21,4 +21,24 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> findByProduct(Product product) {
         return commentDAO.findByProduct(product);
     }
+
+    @Override
+    public void save(Comment comment) {
+        commentDAO.save(comment);
+    }
+
+    @Override
+    public List<Comment> findAllByProductWithUser(Product product) {
+        return commentDAO.findAllByProductWithUser(product);
+    }
+
+    @Override
+    public int findIdByComment(Comment comment) {
+        return commentDAO.findIdByComment(comment);
+    }
+
+    @Override
+    public void delete(int id) {
+        commentDAO.delete(id);
+    }
 }

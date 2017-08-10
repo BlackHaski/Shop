@@ -13,19 +13,34 @@
 
 <main class="float-r margin-bottom-1p box-sizing-box height-auto bg-black width80p">
     <div class="width100p display-i-b text-align-c">
-        <button class="login-btn width50p bg-black">
-            <a href="createProductPage" class="width100p display-b">Add Product</a>
-        </button>
+        <sec:authorize access="hasRole('ADMIN')">
+            <button class="login-btn width50p bg-black">
+                <a href="createProductPage" class="width100p display-b">Add Product</a>
+            </button>
+        </sec:authorize>
+        <form action="searchProducts" method="post" class="float-r padding-r-5p">
+            <input type="search" name="searchName" class="log-in-inp" placeholder="Enter product name">
+            <input type="submit" value="Search" class="login-btn">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}">
+        </form>
     </div>
-    <div class="width100p display-i-b ">
-        <c:if test="${currentProducts != null}">
+    <div id="currentProductList" class="width100p display-i-b">
+        <c:if test="${not empty currentProducts}">
             <c:forEach var="product" items="${currentProducts}">
-                <a href="product-${product.productName}" class="width30p display-b text-decor-none good height-auto float-l">
+                <a href="product-${product.productName}"
+                   class="width30p display-b text-decor-none good height-auto float-l">
                     <img src="${product.images[0]}">
                     <p>Name: ${product.productName}</p>
                     <h2>${product.price}</h2>
                 </a>
             </c:forEach>
+        </c:if>
+        <c:if test="${empty currentProducts}">
+            <div class="width100p height-auto text-align-c margin-top-30px">
+                <img src="/images/empty.png" width="80%" height="450px">
+            </div>
         </c:if>
     </div>
 

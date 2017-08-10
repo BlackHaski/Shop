@@ -59,3 +59,8 @@ function showPopupWindow() {
         $(".popupWindow").css("display","none");
     },5000);
 }
+function getProductName() {
+    let pathname = window.location.pathname;
+    let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
+    return nameProduct;
+}

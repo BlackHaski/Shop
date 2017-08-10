@@ -1,5 +1,7 @@
 package shop.entity.products;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import shop.entity.security.User;
 
@@ -21,10 +23,19 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentId;
     private String text;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy/MM/dd hh:mm" ,shape = JsonFormat.Shape.STRING,timezone = "Europe/Kiev")
     private Date date;
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Product product = null;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private User user = null;
 
+    public Comment(String text, Date date, Product product, User user) {
+        this.text = text;
+        this.date = date;
+        this.product = product;
+        this.user = user;
+    }
 }

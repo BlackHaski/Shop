@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import shop.entity.products.Comment;
 import shop.entity.products.Product;
 import shop.entity.products.Rating;
 import shop.entity.security.User;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,18 +62,9 @@ public class ProductRestController {
     }
 
     @PostMapping("/getCurrentProduct")
-    public Map<String, Object> getCurrentProduct(@RequestBody StringBuilder name) {
-        Map<String, Object> result = new HashMap<>();
-
+    public Product getCurrentProduct(@RequestBody StringBuilder name) {
         Product product = productService.findByProductName(String.valueOf(name));
-        List<Rating> ratings = ratingService.findAllByProductWithUser(product);
-        List<Comment> comments = commentService.findByProduct(product);
-
-        result.put("product", product);
-        result.put("ratings", ratings);
-        result.put("comments", comments);
-
-        return result;
+        return product;
     }
 
     @PostMapping("/setProductRating")
@@ -91,12 +80,12 @@ public class ProductRestController {
 
             String result = "";
             if (currentRating == null) {
-                Rating rating = typeRating ? new Rating(true, product, user) : new Rating(false, product, user);
+                Rating rating = new Rating(typeRating, product, user);
                 ratingService.save(rating);
                 result = "save";
-                return result + String.valueOf(rating.isPosRating());
+                return result + String.valueOf(rating.isRating());
             } else {
-                String type = String.valueOf(currentRating.isPosRating());
+                String type = String.valueOf(currentRating.isRating());
                 result = "delete";
                 ratingService.delete(currentRating);
                 return result + type;
@@ -107,15 +96,37 @@ public class ProductRestController {
     }
 
     @PostMapping("/addToCartProduct")
-    public boolean addToCartProduct(@RequestBody Map<String, String> params, Principal principal, HttpSession httpSession) {
+    public String  addToCartProduct(@RequestBody Map<String, String> params, Principal principal, HttpSession httpSession) {
         if (principal == null) {
-            return false;
+            return "anonim";
         } else {
             Cart cart = (Cart) httpSession.getAttribute("cart");
-            cart.addToCart(productService.findByProductName(params.get("nameProduct")),
-                    Integer.parseInt(params.get("countProduct")));
-            return true;
+            Product productToCart = productService.findByProductName(params.get("nameProduct"));
+            int countProduct = Integer.parseInt(params.get("countProduct"));
+            Map<Product, Integer> productsInCart = cart.getProducts();
+
+            if (productsInCart.size() > 0) {
+                for (Map.Entry<Product, Integer> entry : productsInCart.entrySet()) {
+                    if (entry.getKey().equals(productToCart)) {
+                        entry.setValue(entry.getValue() + countProduct);
+                        return "changeCount";
+                    }
+                }
+            }
+            cart.addToCart(productToCart, countProduct);
+            return "add";
         }
+    }
+    @PostMapping("/deleteProductFromCart")
+    public boolean deleteProductFromCart(@RequestBody String productName, HttpSession httpSession) {
+        Cart cart = (Cart) httpSession.getAttribute("cart");
+        for (Map.Entry<Product, Integer> entry : cart.getProducts().entrySet()) {
+            if (entry.getKey().getProductName().equals(productName)) {
+                cart.getProducts().remove(entry.getKey());
+                return true;
+            }
+        }
+        return false;
     }
 }
 

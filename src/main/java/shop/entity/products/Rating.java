@@ -19,8 +19,7 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
-    private boolean posRating = false;
-    private boolean negRating = false;
+    private boolean rating = false;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Product product = null;
@@ -28,10 +27,7 @@ public class Rating {
     private User user = null;
 
     public Rating(boolean rating, Product product, User user) {
-        if (rating)
-            this.posRating = true;
-        else
-            this.negRating = true;
+        this.rating = rating;
         this.product = product;
         this.user = user;
     }

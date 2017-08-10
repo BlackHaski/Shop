@@ -1,12 +1,14 @@
 package shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import shop.entity.Category;
 import shop.service.CategoryService;
+import shop.service.CommentService;
 import shop.service.ProductService;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public class AdminRestController {
     CategoryService categoryService;
     @Autowired
     ProductService productService;
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/show")
     public List<Category> show() {
@@ -49,4 +53,9 @@ public class AdminRestController {
         categoryService.updateParentId(category.getCategoryId(),category.getParentId());
     }
 
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/deleteComment")
+    public void deleteComment(@RequestBody String  id) {
+        commentService.delete(Integer.parseInt(id));
+    }
 }

@@ -34,4 +34,9 @@ public class ProductServiceImpl implements ProductService{
         return productDAO.findByProductName(productName);
     }
 
+    @Override
+    public List<Product> findAllByProductNameIsContaining(String productName) {
+        return productDAO.findAllByProductNameIsContaining(productName);
+    }
+
 }

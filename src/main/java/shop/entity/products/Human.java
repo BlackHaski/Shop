@@ -13,14 +13,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder
-public class Human extends Product{
+public class Human extends Product {
     private int age;
     private int height;
     private int width;
 
     public Human(String productName, int price, double rebate, String descr, int count, Category category, int age, int height, int width, List<String> images) {
-        super(productName, price, rebate, descr, count, category,images);
+        super(productName, price, rebate, descr, count, category, images);
         this.age = age;
         this.height = height;
         this.width = width;

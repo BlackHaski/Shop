@@ -13,9 +13,13 @@
 }
 .productCart{
     color: #9daabb;
+    transition: 0.3s;
 }
 .productCart h1{
     font-size: 20px;
+}
+.productCart:hover{
+    color: #0bb8fc;
 }
 .subtotal{
     width: 12%;
@@ -24,7 +28,6 @@
     font-size: 18px;
     color: #9daabb;
     padding: 20px 0;
-
 }
 .subtotal button {
     width: 100%;
@@ -39,4 +42,8 @@
 }
 .subtotal button:hover {
     background: #1fa086;
+}
+[name = 'deleteProductFromCart']:hover{
+    color: #AD394A;
+    cursor: pointer;
 }

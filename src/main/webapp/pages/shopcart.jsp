@@ -13,25 +13,30 @@
             <p>PRICE</p>
         </div>
     </div>
-    <c:forEach var="product" items="${cartProducts}">
+    <c:forEach var="product" items="${cart.getProducts()}">
         <div class="clear-b border-t productCart border-b">
             <div class="height-auto width5p float-l">
-                <p id="deleteProductFromCart" class="float-l mar0-pad0">×</p>
+                <p name="deleteProductFromCart" data-delProdname="${product.key.productName}" class="float-l mar0-pad0">×</p>
             </div>
             <div class="height-auto width65p float-l">
                 <img src="${product.key.images.get(0)}" class="float-l" height="70px" width="100px">
-                <h1 class="mar0-pad0">${product.key.productName}</h1>
+                <h1 class="mar0-pad0">
+                    <a class="text-decor-none" href="/product-${product.key.productName}">
+                        ${product.key.productName}
+                    </a>
+                </h1>
             </div>
-            <div class="float-l width20p height-auto">${product.value}</div>
+            <div id="countProductInCart" class="float-l width20p height-auto">${product.value}</div>
             <div class="float-l width10p height-auto">${product.key.price}</div>
         </div>
     </c:forEach>
     <div class="clear-b float-r subtotal">
         <div>
-            <p class="float-l">Subtotal </p>
-            <p class="float-r">7000$</p>
+            <p class="float-l">Result</p>
+            <p class="float-r">${resultSum}</p>
         </div>
         <button class="clear-b">CHECKOUT</button>
     </div>
 </div>
+<script src="/js/shopCart.js"></script>
 <%@include file="templates/footer.jsp" %>

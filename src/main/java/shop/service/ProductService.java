@@ -13,5 +13,8 @@ public interface ProductService {
 
     Product findByProductName(String productName);
 
+    List<Product> findAllByProductNameIsContaining(String productName);
+
+
 
 }

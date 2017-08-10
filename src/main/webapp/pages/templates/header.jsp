@@ -55,8 +55,8 @@
             </div>
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
-            <a id="catalog" href="/shopcart" class="link text-decor-none font-size-14px float-r">
-                CART(2)
+            <a id="shopCartPage" href="/shopcart" class="link text-decor-none font-size-14px float-r">
+                CART
             </a>
             <form action="/logout" method="post" class="mar0-pad0 margin-r-2p float-r">
                 <button type="submit" class="login-btn bg-black">

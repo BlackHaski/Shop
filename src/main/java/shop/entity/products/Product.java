@@ -1,10 +1,7 @@
 package shop.entity.products;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import shop.entity.Category;
 
 import javax.persistence.*;
@@ -21,6 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

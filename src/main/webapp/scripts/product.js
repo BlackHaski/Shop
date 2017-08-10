@@ -7,6 +7,7 @@ $(function () {
 });
 
 $(document).ready(function () {
+    connect();
     let pathname = window.location.pathname;
     let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
     $.ajax({
@@ -14,44 +15,34 @@ $(document).ready(function () {
         method: "post",
         contentType: "application/json",
         data: JSON.stringify(nameProduct),
-        success: function (result) {
-            let posRating = 0;
-            let negRating = 0;
-
-            for (let key in result.ratings) {
-                if (result.ratings[key].posRating == false)
-                    negRating++;
-                else
-                    posRating++;
-            }
-            $("#productNameH").text(result.product.productName);
-            $("#productPriceH").text(result.product.price);
-            $("#productDescrP").text(result.product.descr);
-            $("#posRating").text(posRating);
-            $("#negRating").text(negRating);
-            $("#mainProductImg").attr("src", result.product.images[0]);
+        success: function (product) {
+            $("#productNameH").text(product.productName);
+            $("#productPriceH").text(product.price);
+            $("#countProductP").text("Count:"+product.count);
+            $("#soldOut").text("Sold Out:"+product.soldOut);
+            $("#productDescrP").text(product.descr);
+            $("#mainProductImg").attr("src", product.images[0]);
             let firstImg = $("#productImagesContainer").children("img").first();
             $("#productImagesContainer").children("img").first().remove();
-            for (let i = 0; i < result.product.images.length; i++) {
-                let imgPath = result.product.images[i];
+            for (let i = 0; i < product.images.length; i++) {
+                let imgPath = product.images[i];
                 let cloneImg = $(firstImg).clone(true, true);
                 $(cloneImg).attr("src", imgPath);
                 $("#productImagesContainer").append($(cloneImg));
             }
-            console.log(result);
-            delete result.product.count;
-            delete result.product.descr;
-            delete result.product.images;
-            delete result.product.price;
-            delete result.product.productId;
-            delete result.product.productName;
-            delete result.product.productType;
-            delete result.product.rebate;
-            delete result.product.soldOut;
+            delete product.count;
+            delete product.descr;
+            delete product.images;
+            delete product.price;
+            delete product.productId;
+            delete product.productName;
+            delete product.productType;
+            delete product.rebate;
+            delete product.soldOut;
 
-            for (let key in result.product) {
+            for (let key in product) {
                 let li = $("<li/>");
-                li.text(key + ":" + result.product[key]);
+                li.text(key + ":" + product[key]);
                 $(".characters").append(li);
             }
         }
@@ -72,7 +63,7 @@ $("img[name = 'posRatingImg'],img[name = 'negRatingImg']").click(function () {
 );
 
 function changeRatingOnPage(type) {
-    switch (type){
+    switch (type) {
         case "savetrue": {
             val = Number($("#posRating").text()) + 1;
             $("#posRating").text(val);
@@ -97,7 +88,8 @@ function changeRatingOnPage(type) {
             showPopupWindow();
             break;
         }
-        default:break;
+        default:
+            break;
     }
 }
 
@@ -125,18 +117,31 @@ $("#addToCart").click(function () {
     let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
     let count = $("#countProduct").val();
     let params = {
-        nameProduct : nameProduct,
-        countProduct : count
+        nameProduct: nameProduct,
+        countProduct: count
     };
     $.ajax({
-        url:"/addToCartProduct",
-        method:"post",
-        contentType:"application/json",
-        data:JSON.stringify(params),
-        success:function (response) {
-            if (response == false){
+        url: "/addToCartProduct",
+        method: "post",
+        contentType: "application/json",
+        data: JSON.stringify(params),
+        success: function (response) {
+            if (response == "anonim") {
                 showPopupWindow();
+            } else if (response == "add" || response == "changeCount") {
+                let interval = setInterval(function () {
+                    $("#shopCartPage").addClass("color-green");
+                    setTimeout(function () {
+                        $("#shopCartPage").removeClass("color-green");
+                    }, 300);
+                }, 600);
+                setTimeout(function () {
+                    clearInterval(interval);
+                },3000)
             }
         }
     });
+});
+$(window).bind('beforeunload', function(){
+    return disconnect();
 });
