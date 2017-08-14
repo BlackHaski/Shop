@@ -19,9 +19,14 @@
             </div>
         </div>
         <div class="margin-l-2p float-l width34p">
-            <div class="float-l margin-l-2p">
+            <div id="prodInfo" class="float-l margin-l-2p">
                 <h1 id="productNameH" class="color-white"></h1>
                 <h2 id="productPriceH" class="color-green"></h2>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <select id="productCategory">
+                        <option value="default">Select category</option>
+                    </select>
+                </sec:authorize>
                 <p id="countProductP"></p>
                 <p id="soldOut"></p>
                 <ul class="characters">
@@ -29,7 +34,7 @@
                 <p id="productDescrP">
                 </p>
                 <div class="height-22px">
-                    <p class="color-gray height-auto float-l font-size-14px mar0-pad0 margin-r-2p">COUNT</p>
+                    <span class="color-gray height-auto float-l font-size-14px mar0-pad0 margin-r-2p">COUNT</span>
                     <input id="countProduct" type="number" class="float-l width20p height-auto margin-l-2p font-size-14px" value="1" min="1" max="50">
                 </div>
                 <button id="addToCart" class="addBtn clear-b">ADD TO CART</button>
@@ -38,6 +43,17 @@
     </div>
 </div>
 <div id="commentsBlock" class="width100p clear-b height-auto">
+    <div name="comment" class="margin-auto clear-b height-auto width80p">
+        <h2 name="usernameCommentator" data-idcomment="${comm.commentId}" class="float-l width20p color-green">
+            ${comm.user.username}
+        </h2>
+        <p name="commentMessage" class="float-l width60p font-size-18px color-gray">
+            ${comm.text}
+        </p>
+        <p name="timeComment" class="float-r text-align-r width10p color-white">
+            ${comm.date}
+        </p>
+    </div>
     <c:forEach var="comm" items="${comments}">
         <div name="comment" class="margin-auto clear-b height-auto width80p">
             <h2 name="usernameCommentator" data-idcomment="${comm.commentId}" class="float-l width20p color-green">

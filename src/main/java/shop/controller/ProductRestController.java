@@ -5,19 +5,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import shop.dao.ProductDAO;
+import shop.entity.Category;
 import shop.entity.products.Product;
 import shop.entity.products.Rating;
 import shop.entity.security.User;
 import shop.functions.Cart;
-import shop.service.CommentService;
-import shop.service.ProductService;
-import shop.service.RatingService;
-import shop.service.UserService;
+import shop.functions.TypeConverter;
+import shop.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,11 @@ public class ProductRestController {
     @Autowired
     RatingService ratingService;
     @Autowired
+    CategoryService categoryService;
+    @Autowired
     UserService userService;
+    @Autowired
+    ProductDAO productDAO;
 
     @PostMapping("/getProductTypes")
     public List<String> getProductTypes() {
@@ -62,9 +67,13 @@ public class ProductRestController {
     }
 
     @PostMapping("/getCurrentProduct")
-    public Product getCurrentProduct(@RequestBody StringBuilder name) {
+    public Map<String , Object> getCurrentProduct(@RequestBody StringBuilder name) {
         Product product = productService.findByProductName(String.valueOf(name));
-        return product;
+        List<Category> categories = categoryService.findAll();
+        Map<String ,Object> response = new HashMap<>();
+        response.put("product",product);
+        response.put("categories",categories);
+        return response;
     }
 
     @PostMapping("/setProductRating")
@@ -96,7 +105,7 @@ public class ProductRestController {
     }
 
     @PostMapping("/addToCartProduct")
-    public String  addToCartProduct(@RequestBody Map<String, String> params, Principal principal, HttpSession httpSession) {
+    public String addToCartProduct(@RequestBody Map<String, String> params, Principal principal, HttpSession httpSession) {
         if (principal == null) {
             return "anonim";
         } else {
@@ -117,6 +126,7 @@ public class ProductRestController {
             return "add";
         }
     }
+
     @PostMapping("/deleteProductFromCart")
     public boolean deleteProductFromCart(@RequestBody String productName, HttpSession httpSession) {
         Cart cart = (Cart) httpSession.getAttribute("cart");
@@ -128,5 +138,54 @@ public class ProductRestController {
         }
         return false;
     }
+
+    @PostMapping("/deleteProduct")
+    public void deleteProduct(@RequestBody String productName) {
+        productService.deleteByProductName(productName);
+    }
+
+    @PostMapping("/updateProduct")
+    public boolean updateProduct(@RequestBody Map<String, String> params) {
+        System.out.println(params);
+        Product product = productService.findByProductName(params.get("productName"));
+        Class productRef = product.getClass();
+        TypeConverter typeConverter = new TypeConverter();
+        Field field = null;
+        try {
+            field = productRef.getDeclaredField(params.get("column"));
+        } catch (NoSuchFieldException e) {
+            try {
+                field = productRef.getSuperclass().getDeclaredField(params.get("column"));
+            } catch (NoSuchFieldException e1) {
+                e1.printStackTrace();
+            }
+        }
+        try {
+            if (field != null){
+                field.setAccessible(true);
+                Class<?> type = field.getType();
+                if (type.getName().equals(String.class.getName())){
+                    field.set(product,params.get("value"));
+                }else {
+                    Number convert = typeConverter.convert(params.get("value"), type);
+                    if (convert != null){
+                        field.set(product,convert);
+                    }
+                }
+                productService.save(product);
+                return true;
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @PostMapping("/changeProductCategory")
+    public void changeProductCategory(@RequestBody Map<String, String> params) {
+        Category category = categoryService.findByCategoryName(params.get("categoryName"));
+        productService.updateProductCategory(params.get("productName"), category);
+    }
+
 }
 

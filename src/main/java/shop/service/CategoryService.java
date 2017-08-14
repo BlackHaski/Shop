@@ -1,6 +1,7 @@
 package shop.service;
 
 import shop.entity.Category;
+import shop.entity.products.Product;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ public interface CategoryService {
     Category findOne(int id);
 
     Category findByCategoryName(String name);
+
+    List<Category> findAllByParentId(int parentId);
+
+    void save(List<Category> categories);
+
+    Category findByProductsIn(Product product);
 
 
 }

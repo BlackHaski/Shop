@@ -25,6 +25,7 @@ public abstract class Product {
     private int productId;
     @Column(nullable = false,updatable = false, insertable = false)
     private String productType;
+    @Column(unique = true)
     private String productName;
     private int price;
     private double rebate = 0.0;

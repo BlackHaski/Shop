@@ -29,12 +29,17 @@
     <div id="currentProductList" class="width100p display-i-b">
         <c:if test="${not empty currentProducts}">
             <c:forEach var="product" items="${currentProducts}">
-                <a href="product-${product.productName}"
-                   class="width30p display-b text-decor-none good height-auto float-l">
-                    <img src="${product.images[0]}">
-                    <p>Name: ${product.productName}</p>
-                    <h2>${product.price}</h2>
-                </a>
+                <div class="width30p float-l margin-l-2p">
+                    <a href="product-${product.productName}"
+                       class="width100p display-b text-decor-none good height-auto">
+                        <img src="${product.images[0]}">
+                        <p>Name: ${product.productName}</p>
+                        <h2>${product.price}</h2>
+                    </a>
+                    <div class="clear-b text-align-c">
+                        <span name="deleteProduct" data-productName="${product.productName}" class="color-green">Delete</span>
+                    </div>
+                </div>
             </c:forEach>
         </c:if>
         <c:if test="${empty currentProducts}">
@@ -47,4 +52,5 @@
 </main>
 <script src="/js/functions.js"></script>
 <script src="/js/main.js"></script>
+<script src="/js/product.js"></script>
 <%@include file="templates/footer.jsp" %>

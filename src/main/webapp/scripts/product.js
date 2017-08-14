@@ -15,39 +15,79 @@ $(document).ready(function () {
         method: "post",
         contentType: "application/json",
         data: JSON.stringify(nameProduct),
-        success: function (product) {
-            $("#productNameH").text(product.productName);
-            $("#productPriceH").text(product.price);
-            $("#countProductP").text("Count:"+product.count);
-            $("#soldOut").text("Sold Out:"+product.soldOut);
-            $("#productDescrP").text(product.descr);
-            $("#mainProductImg").attr("src", product.images[0]);
+        success: function (response) {
+            console.log(response);
+            $("#productNameH").text(response.product.productName);
+            $("#productNameH").attr("data-key", "productName");
+
+            $("#productPriceH").text(response.product.price);
+            $("#productPriceH").attr("data-key", "price");
+
+            $("#countProductP").text("Count:" + response.product.count);
+            $("#countProductP").attr("data-val", response.product.count);
+            $("#countProductP").attr("data-key", "count");
+
+            $("#soldOut").text("Sold Out:" + response.product.soldOut);
+            $("#soldOut").attr("data-key", "soldOut");
+
+            $("#productDescrP").text(response.product.descr);
+            $("#productDescrP").attr("data-key", "descr");
+
+            $("#mainProductImg").attr("src", response.product.images[0]);
             let firstImg = $("#productImagesContainer").children("img").first();
             $("#productImagesContainer").children("img").first().remove();
-            for (let i = 0; i < product.images.length; i++) {
-                let imgPath = product.images[i];
+            for (let i = 0; i < response.product.images.length; i++) {
+                let imgPath = response.product.images[i];
                 let cloneImg = $(firstImg).clone(true, true);
                 $(cloneImg).attr("src", imgPath);
                 $("#productImagesContainer").append($(cloneImg));
             }
-            delete product.count;
-            delete product.descr;
-            delete product.images;
-            delete product.price;
-            delete product.productId;
-            delete product.productName;
-            delete product.productType;
-            delete product.rebate;
-            delete product.soldOut;
+            delete response.product.count;
+            delete response.product.descr;
+            delete response.product.images;
+            delete response.product.price;
+            delete response.product.productId;
+            delete response.product.productName;
+            delete response.product.productType;
+            delete response.product.rebate;
+            delete response.product.soldOut;
 
-            for (let key in product) {
+            for (let key in response.product) {
                 let li = $("<li/>");
-                li.text(key + ":" + product[key]);
+                li.text(key + ":" + response.product[key]);
+                li.attr("data-key", key);
                 $(".characters").append(li);
+            }
+            for (let key in response.categories) {
+                let $option = $("<option/>");
+                $option.attr("value",response.categories[key].categoryName);
+                $option.text(response.categories[key].categoryName);
+                $("#productCategory").append($option);
             }
         }
     });
 });
+
+$("#productCategory").change(function () {
+    let categoryName = this.options[this.selectedIndex].getAttribute("value");
+    let productName = getProductName();
+    let params = {
+        productName:productName,
+        categoryName: categoryName
+    };
+    if (categoryName != "default"){
+        $.ajax({
+            url:"/changeProductCategory",
+            method:"post",
+            contentType:"application/json",
+            data:JSON.stringify(params),
+            success:function () {
+                console.log("here");
+            }
+        });
+    }
+});
+
 $(document).on("click", "#productImagesContainer img", function () {
     $("#mainProductImg").attr("src", this.getAttribute("src"));
 });
@@ -137,11 +177,73 @@ $("#addToCart").click(function () {
                 }, 600);
                 setTimeout(function () {
                     clearInterval(interval);
-                },3000)
+                }, 3000)
             }
         }
     });
 });
-$(window).bind('beforeunload', function(){
+$(window).bind('beforeunload', function () {
     return disconnect();
+});
+
+$("span[name = 'deleteProduct']").click(function () {
+    let name = $(this).attr("data-productName");
+    $.ajax({
+        url: "/deleteProduct",
+        method: "post",
+        contentType: "text/plain",
+        data: name
+    });
+    $(this).parent().parent().remove();
+});
+
+$(document).on("dblclick", "#prodInfo h1, #prodInfo h2, #prodInfo p, #prodInfo li", function () {
+    let inputWindow = document.createElement("div");
+    let header = document.createElement("h1");
+    let input = document.createElement("input");
+    let button = document.createElement("button");
+    $(button).text("CHANGE");
+
+    $(header).html("Please enter a new property ("
+        + "<span data-key=" + $(this).attr('data-key') + ">" + $(this).attr("data-key") + "</span>" + "):");
+    $(header).attr("class", "headerInputWindow");
+
+    $(inputWindow).attr("class", "inputWindow");
+
+    $(input).attr("class", "inputInInputWindow");
+
+    $(button).attr("class", "buttonInInputWindow");
+
+    $(inputWindow).append("<span class='closeInputWindow'>X</span>")
+    $(inputWindow).append(header);
+    $(inputWindow).append(input);
+    $(inputWindow).append(button);
+    document.body.appendChild(inputWindow);
+});
+$(document).on("click", ".buttonInInputWindow", function () {
+    let val = $(".inputWindow input").val();
+    let key = $(".headerInputWindow span").attr("data-key");
+    let params = {
+        column: key,
+        productName: getProductName(),
+        value: val
+    };
+    $.ajax({
+        url: "/updateProduct",
+        method: "post",
+        contentType: "application/json",
+        data: JSON.stringify(params),
+        success: function (response) {
+            $(".inputWindow").remove();
+            if (key == "productName"){
+                var url = "localhost8080:/product-".concat(val);
+                window.location.href = url;
+            }else {
+                window.location.reload();
+            }
+        }
+    });
+});
+$(document).on("click", ".closeInputWindow", function () {
+    $(".inputWindow").remove();
 });

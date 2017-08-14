@@ -32,4 +32,8 @@ public class Category {
         this.categoryName = categoryName;
         this.parentId = parentId;
     }
+
+    public void addProducts(List<Product> products){
+        this.products.addAll(products);
+    }
 }

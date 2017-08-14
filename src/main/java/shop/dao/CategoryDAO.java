@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import shop.entity.Category;
+import shop.entity.products.Product;
+
+import java.util.List;
 
 /**
  * Created by blackhaski on 21.06.17.
@@ -19,4 +22,9 @@ public interface CategoryDAO extends JpaRepository<Category, Integer> {
     void updateParentId(@Param("id") int id,@Param("newParentId")int newParentId);
 
     Category findByCategoryName(String name);
+
+    List<Category> findAllByParentId(int parentId);
+
+    Category findByProductsIn(Product product);
+
 }

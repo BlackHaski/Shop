@@ -96,7 +96,6 @@ public class AdminController {
 
             }
         }
-
         return "main";
     }
 }
