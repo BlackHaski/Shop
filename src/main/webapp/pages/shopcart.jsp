@@ -14,19 +14,19 @@
         </div>
     </div>
     <c:forEach var="product" items="${cart.getProducts()}">
-        <div class="clear-b border-t productCart border-b">
+        <div name="productInCart" class="clear-b border-t productCart border-b">
             <div class="height-auto width5p float-l">
                 <p name="deleteProductFromCart" data-delProdname="${product.key.productName}" class="float-l mar0-pad0">×</p>
             </div>
             <div class="height-auto width65p float-l">
                 <img src="${product.key.images.get(0)}" class="float-l" height="70px" width="100px">
                 <h1 class="mar0-pad0">
-                    <a class="text-decor-none" href="/product-${product.key.productName}">
-                        ${product.key.productName}
+                    <a name="productName" data-productName="${product.key.productName}" class="text-decor-none" href="/product-${product.key.productName}">
+                            ${product.key.productName}
                     </a>
                 </h1>
             </div>
-            <div id="countProductInCart" class="float-l width20p height-auto">${product.value}</div>
+            <div name="count" data-count="${product.value}" class="float-l width20p height-auto">${product.value}</div>
             <div class="float-l width10p height-auto">${product.key.price}</div>
         </div>
     </c:forEach>
@@ -35,7 +35,7 @@
             <p class="float-l">Result</p>
             <p class="float-r">${resultSum}</p>
         </div>
-        <button class="clear-b">CHECKOUT</button>
+        <button id="checkout" class="clear-b">CHECKOUT</button>
     </div>
 </div>
 <script src="/js/shopCart.js"></script>

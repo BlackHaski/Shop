@@ -3,6 +3,7 @@ package shop.entity.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import shop.entity.products.SoldOut;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class User implements UserDetails{
     private boolean isEnabled = true;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
     private UserInfo userInfo = null;
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH, mappedBy = "user")
+    private SoldOut boughtProducts;
 
     public User() {
     }

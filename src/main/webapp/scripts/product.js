@@ -42,6 +42,9 @@ $(document).ready(function () {
                 $(cloneImg).attr("src", imgPath);
                 $("#productImagesContainer").append($(cloneImg));
             }
+            if (Number.parseInt(response.product.count) <= 0){
+                document.getElementById("addToCart").disabled = true;
+            }
             delete response.product.count;
             delete response.product.descr;
             delete response.product.images;

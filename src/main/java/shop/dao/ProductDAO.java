@@ -31,4 +31,6 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Modifying
     @Query("update Product p set p.category=:category where p.productName=:productName")
     void updateProductCategory(@Param("productName") String productName,@Param("category") Category category);
+
+
 }

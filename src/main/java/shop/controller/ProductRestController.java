@@ -9,6 +9,7 @@ import shop.dao.ProductDAO;
 import shop.entity.Category;
 import shop.entity.products.Product;
 import shop.entity.products.Rating;
+import shop.entity.products.SoldOut;
 import shop.entity.security.User;
 import shop.functions.Cart;
 import shop.functions.TypeConverter;
@@ -36,6 +37,8 @@ public class ProductRestController {
     UserService userService;
     @Autowired
     ProductDAO productDAO;
+    @Autowired
+    SoldOutService soldOutService;
 
     @PostMapping("/getProductTypes")
     public List<String> getProductTypes() {
@@ -67,12 +70,12 @@ public class ProductRestController {
     }
 
     @PostMapping("/getCurrentProduct")
-    public Map<String , Object> getCurrentProduct(@RequestBody StringBuilder name) {
+    public Map<String, Object> getCurrentProduct(@RequestBody StringBuilder name) {
         Product product = productService.findByProductName(String.valueOf(name));
         List<Category> categories = categoryService.findAll();
-        Map<String ,Object> response = new HashMap<>();
-        response.put("product",product);
-        response.put("categories",categories);
+        Map<String, Object> response = new HashMap<>();
+        response.put("product", product);
+        response.put("categories", categories);
         return response;
     }
 
@@ -161,15 +164,15 @@ public class ProductRestController {
             }
         }
         try {
-            if (field != null){
+            if (field != null) {
                 field.setAccessible(true);
                 Class<?> type = field.getType();
-                if (type.getName().equals(String.class.getName())){
-                    field.set(product,params.get("value"));
-                }else {
+                if (type.getName().equals(String.class.getName())) {
+                    field.set(product, params.get("value"));
+                } else {
                     Number convert = typeConverter.convert(params.get("value"), type);
-                    if (convert != null){
-                        field.set(product,convert);
+                    if (convert != null) {
+                        field.set(product, convert);
                     }
                 }
                 productService.save(product);
@@ -185,6 +188,34 @@ public class ProductRestController {
     public void changeProductCategory(@RequestBody Map<String, String> params) {
         Category category = categoryService.findByCategoryName(params.get("categoryName"));
         productService.updateProductCategory(params.get("productName"), category);
+    }
+
+    @PostMapping("/buyProduct")
+    public boolean buyProduct(@RequestBody List<Map<String, String>> params, HttpSession httpSession, Principal principal) {
+        for (Map<String, String> param : params) {
+            Product product = productService.findByProductName(param.get("name"));
+            User user = (User) userService.loadUserByUsername(principal.getName());
+            product.setSoldOut(
+                    product.getSoldOut() + Integer.parseInt(param.get("count"))
+            );
+            product.setCount(
+                    product.getCount() - Integer.parseInt(param.get("count"))
+            );
+            Cart cart = (Cart) httpSession.getAttribute("cart");
+            cart.getProducts().clear();
+            productService.save(product);
+
+            SoldOut soldOut = soldOutService.findByProductAndUser(product, user);
+            if (soldOut != null) {
+                soldOut.setCount(
+                        soldOut.getCount() + Integer.parseInt(param.get("count"))
+                );
+            }else {
+                soldOut = new SoldOut(user,product,Integer.parseInt(param.get("count")));
+            }
+            soldOutService.save(soldOut);
+        }
+        return true;
     }
 
 }

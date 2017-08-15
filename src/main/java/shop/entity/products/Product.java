@@ -42,8 +42,11 @@ public abstract class Product {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "product")
     private List<Comment> comments = new ArrayList<Comment>();
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private Category category = null;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE,mappedBy = "product")
+    private List<SoldOut> bought;
 
     public Product(String productName, int price, double rebate, String descr, int count, Category category, List<String> images) {
         this.productName = productName;
