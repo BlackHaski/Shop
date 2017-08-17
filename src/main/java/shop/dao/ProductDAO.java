@@ -32,5 +32,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Query("update Product p set p.category=:category where p.productName=:productName")
     void updateProductCategory(@Param("productName") String productName,@Param("category") Category category);
 
-
+    @Modifying
+    @Query(value = "delete Product_images FROM Product_images WHERE Product_images.images =:img",nativeQuery = true)
+    void deleteImg(@Param("img") String img);
 }

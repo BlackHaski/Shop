@@ -2,6 +2,7 @@ package shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import shop.service.MailService;
@@ -18,10 +19,17 @@ public class MailController {
                            @RequestParam("email") String email,
                            @RequestParam("password") String password,
                            @RequestParam("message") String message,
-                           Principal principal) {
+                           Principal principal,
+                           Model model) {
+        boolean answer = false;
         if (username.length() > 0 && email.length() > 0 && password.length() > 0 && message.length() > 0) {
-            if (principal.getName().length() > 0)
+            if (principal != null) {
                 mailService.send(username, email, password, message, principal.getName());
+            } else {
+                mailService.send(username, email, password, message, "");
+            }
+        } else {
+            return "contact";
         }
         return "main";
     }

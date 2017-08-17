@@ -250,3 +250,13 @@ $(document).on("click", ".buttonInInputWindow", function () {
 $(document).on("click", ".closeInputWindow", function () {
     $(".inputWindow").remove();
 });
+$(document).on("dblclick","#productImagesContainer img",function () {
+    let img = $(this).attr("src");
+    $.ajax({
+        url:"/deleteProductImg",
+        method:"post",
+        contentType:"plain/text",
+        data: img
+    });
+    $(this).remove();
+});

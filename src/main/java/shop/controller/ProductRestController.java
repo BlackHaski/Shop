@@ -1,10 +1,13 @@
 package shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import shop.dao.ProductDAO;
 import shop.entity.Category;
 import shop.entity.products.Product;
@@ -15,7 +18,11 @@ import shop.functions.Cart;
 import shop.functions.TypeConverter;
 import shop.service.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -147,6 +154,7 @@ public class ProductRestController {
         productService.deleteByProductName(productName);
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/updateProduct")
     public boolean updateProduct(@RequestBody Map<String, String> params) {
         System.out.println(params);
@@ -210,12 +218,46 @@ public class ProductRestController {
                 soldOut.setCount(
                         soldOut.getCount() + Integer.parseInt(param.get("count"))
                 );
-            }else {
-                soldOut = new SoldOut(user,product,Integer.parseInt(param.get("count")));
+            } else {
+                soldOut = new SoldOut(user, product, Integer.parseInt(param.get("count")));
             }
             soldOutService.save(soldOut);
         }
         return true;
+    }
+
+    @PostMapping("/deleteProductImg")
+    public void deleteProductImg(@RequestBody String img) {
+        productService.deleteImg(img);
+    }
+
+    @PostMapping("/addImgToProduct")
+    public void addImgToProduct(@RequestParam("img") MultipartFile img, HttpServletRequest httpRequest,
+                                HttpServletResponse response) {
+        String prodName = httpRequest.getHeader("Referer");
+        prodName = prodName.substring(prodName.indexOf("-") + 1);
+        Product product = productService.findByProductName(prodName);
+        if (img.getOriginalFilename().length() > 0 &&
+                (img.getOriginalFilename().endsWith(".jpg")
+                        || img.getOriginalFilename().endsWith(".png"))) {
+            String realPath = System.getProperty("user.home")
+                    + File.separator + "Programming" + File.separator
+                    + "JavaComplex" + File.separator
+                    + "productImages" + File.separator;
+            String fileName = prodName + img.getOriginalFilename();
+            try {
+                img.transferTo(new File(realPath + fileName));
+                product.getImages().add("productImages/"+fileName);
+                productService.save(product);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            response.sendRedirect(httpRequest.getHeader("Referer"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

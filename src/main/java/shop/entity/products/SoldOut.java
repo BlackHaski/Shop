@@ -16,7 +16,7 @@ public class SoldOut {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSoldOutProduct;
     private int count;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     private User user;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     private Product product;

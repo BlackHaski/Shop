@@ -28,5 +28,6 @@ public interface ProductService {
 
     void updateProductCategory(String productName,Category category);
 
+    void deleteImg(String img);
 
 }

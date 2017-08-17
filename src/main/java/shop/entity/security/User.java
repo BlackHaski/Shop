@@ -8,6 +8,7 @@ import shop.entity.products.SoldOut;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by blackhaski on 26.06.17.
@@ -27,8 +28,8 @@ public class User implements UserDetails{
     private boolean isEnabled = true;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
     private UserInfo userInfo = null;
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH, mappedBy = "user")
-    private SoldOut boughtProducts;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.DETACH, mappedBy = "user")
+    private List<SoldOut> boughtProducts;
 
     public User() {
     }

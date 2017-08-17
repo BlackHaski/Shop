@@ -12,19 +12,20 @@
         <h1 class="color-white">Send email</h1>
 
         <h2 class="headInp">Name</h2>
-        <input name="username" type="text" class="float-l width100p">
+        <input name="username" type="text" required class="float-l width100p">
 
         <h2 class="headInp clear-b">Email Address</h2>
-        <input name="email" type="email" class="width100p">
+        <input name="email" type="email" required class="width100p">
 
         <h2 class="headInp clear-b">Password</h2>
-        <input name="password" type="password" class="width100p">
+        <input name="password" type="password" required class="width100p">
 
         <h2 class="headInp clear-b">Message</h2>
-        <textarea name="message" cols="129" rows="8"></textarea>
+        <textarea name="message" cols="129" required rows="8"></textarea>
 
         <div class="text-align-c">
-            <input type="submit" value="SEND EMAIL">
+            <input id="sendEmailFromUser" type="submit" value="SEND EMAIL">
+            <sf:errors ></sf:errors>
         </div>
         <input type="hidden"
                name="${_csrf.parameterName}"

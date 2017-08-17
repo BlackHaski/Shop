@@ -16,6 +16,13 @@
             </p>
             <div id="productImagesContainer" class="width100p margin-top-510px text-align-c">
                     <img width="12%" class="margin-l-2p margin-r-2p" height="67px">
+                <form action="/addImgToProduct" method="post" enctype="multipart/form-data">
+                    <input name="img" type="file">
+                    <input type="submit">
+                    <input type="hidden"
+                                       name="${_csrf.parameterName}"
+                                       value="${_csrf.token}">
+                </form>
             </div>
         </div>
         <div class="margin-l-2p float-l width34p">

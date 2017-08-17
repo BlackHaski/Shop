@@ -36,9 +36,11 @@
                         <p>Name: ${product.productName}</p>
                         <h2>${product.price}</h2>
                     </a>
-                    <div class="clear-b text-align-c">
-                        <span name="deleteProduct" data-productName="${product.productName}" class="color-green">Delete</span>
-                    </div>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <div class="clear-b text-align-c">
+                            <span name="deleteProduct" data-productName="${product.productName}" class="color-green">Delete</span>
+                        </div>
+                    </sec:authorize>
                 </div>
             </c:forEach>
         </c:if>

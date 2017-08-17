@@ -47,6 +47,20 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public void deleteImg(String image) {
+        productDAO.deleteImg(image);
+        String realPath = System.getProperty("user.home")
+                + File.separator + "Programming" + File.separator
+                + "JavaComplex" + File.separator
+                + "productImages" + File.separator;
+        if (!image.contains("defaultGoodImg.png")) {
+            image = image.substring(image.indexOf("/"));
+            File file = new File(realPath.concat(image));
+            file.delete();
+        }
+    }
+
+    @Override
     public void deleteByProductName(String productName) {
         List<String> images = findByProductName(productName).getImages();
         String realPath = System.getProperty("user.home")
@@ -54,9 +68,11 @@ public class ProductServiceImpl implements ProductService{
                 + "JavaComplex" + File.separator
                 + "productImages" + File.separator;
         for (String image : images) {
-            image = image.substring(image.indexOf("/"));
-            File file = new File(realPath.concat(image));
-            file.delete();
+            if (!image.contains("defaultGoodImg.png")) {
+                image = image.substring(image.indexOf("/"));
+                File file = new File(realPath.concat(image));
+                file.delete();
+            }
         }
         productDAO.deleteByProductName(productName);
     }
