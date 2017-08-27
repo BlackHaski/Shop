@@ -28,10 +28,12 @@ public class SecurityController {
                           @DateTimeFormat(iso = DateTimeFormat.ISO.NONE,pattern = "yyyy-MM-dd") @RequestParam("birthday") Date birthday,
                           @RequestParam("password") String password,
                           @RequestParam("checkPassword") String checkPassword){
+        if (password.equals(checkPassword)){
         User user = new User(username,email,password);
         user.setUserInfo(new UserInfo(birthday,"/avatars/default/defaultAvatar.png", Role.ROLE_USER,user));
         userService.save(user);
-        return "main";
+            return "main";
+        }else return "redirect:/registration?error";
     }
 
     @GetMapping("/recoverPass")

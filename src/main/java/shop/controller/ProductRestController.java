@@ -25,10 +25,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 @RestController
 public class ProductRestController {
@@ -157,7 +157,6 @@ public class ProductRestController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/updateProduct")
     public boolean updateProduct(@RequestBody Map<String, String> params) {
-        System.out.println(params);
         Product product = productService.findByProductName(params.get("productName"));
         Class productRef = product.getClass();
         TypeConverter typeConverter = new TypeConverter();
@@ -175,9 +174,14 @@ public class ProductRestController {
             if (field != null) {
                 field.setAccessible(true);
                 Class<?> type = field.getType();
-                if (type.getName().equals(String.class.getName())) {
+                if (type.getName().equals(Date.class.getName())){
+                    field.set(product,
+                            Date.from(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("value")).toInstant().plus(1, ChronoUnit.DAYS)));
+                }
+                else if (type.getName().equals(String.class.getName())) {
                     field.set(product, params.get("value"));
-                } else {
+                }
+                else {
                     Number convert = typeConverter.convert(params.get("value"), type);
                     if (convert != null) {
                         field.set(product, convert);
@@ -187,6 +191,8 @@ public class ProductRestController {
                 return true;
             }
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return false;
@@ -258,6 +264,12 @@ public class ProductRestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @PostMapping("/getUserGoods")
+    public List<SoldOut> getUserGoods(Principal principal) {
+        User user = (User)userService.loadUserByUsername(principal.getName());
+        return soldOutService.findProductByUser(user);
     }
 
 }

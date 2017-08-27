@@ -1,11 +1,13 @@
 package shop.entity.products;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import shop.entity.Category;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public abstract class Product {
     private String productType;
     @Column(unique = true)
     private String productName;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd" ,shape = JsonFormat.Shape.STRING)
+    private Date date;
     private int price;
     private double rebate = 0.0;
     private String descr;
@@ -56,5 +61,7 @@ public abstract class Product {
         this.count = count;
         this.category = category;
         this.images = images;
+        this.date = new Date();
     }
+
 }

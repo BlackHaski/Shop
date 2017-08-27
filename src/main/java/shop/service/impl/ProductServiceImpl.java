@@ -1,6 +1,8 @@
 package shop.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.dao.ProductDAO;
@@ -37,6 +39,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public Page<Product> findAllByCategoryCategoryName(String categoryName, Pageable pageable) {
+        return productDAO.findAllByCategoryCategoryName(categoryName,pageable);
+    }
+
+    @Override
     public Product findByProductName(String productName) {
         return productDAO.findByProductName(productName);
     }
@@ -44,6 +51,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Product> findAllByProductNameIsContaining(String productName) {
         return productDAO.findAllByProductNameIsContaining(productName);
+    }
+
+    @Override
+    public Page<Product> findAllByProductNameIsContaining(String productName, Pageable pageable) {
+        return productDAO.findAllByProductNameIsContaining(productName,pageable);
     }
 
     @Override
@@ -96,6 +108,5 @@ public class ProductServiceImpl implements ProductService{
     public void delete(List<Product> products) {
         productDAO.delete(products);
     }
-
 
 }

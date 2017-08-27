@@ -9,6 +9,8 @@ import shop.entity.products.SoldOut;
 import shop.entity.security.User;
 import shop.service.SoldOutService;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class SoldOutServiceImpl implements SoldOutService {
@@ -23,5 +25,10 @@ public class SoldOutServiceImpl implements SoldOutService {
     @Override
     public SoldOut findByProductAndUser(Product product, User user) {
         return soldOutDAO.findByProductAndUser(product,user);
+    }
+
+    @Override
+    public List<SoldOut> findProductByUser(User user) {
+        return soldOutDAO.findProductByUser(user);
     }
 }

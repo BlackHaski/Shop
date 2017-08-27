@@ -23,6 +23,9 @@ $(document).ready(function () {
             $("#productPriceH").text(response.product.price);
             $("#productPriceH").attr("data-key", "price");
 
+            $("#addedDate").text("Date: "+response.product.date);
+            $("#addedDate").attr("data-key", "date");
+
             $("#countProductP").text("Count:" + response.product.count);
             $("#countProductP").attr("data-val", response.product.count);
             $("#countProductP").attr("data-key", "count");
@@ -42,7 +45,7 @@ $(document).ready(function () {
                 $(cloneImg).attr("src", imgPath);
                 $("#productImagesContainer").append($(cloneImg));
             }
-            if (Number.parseInt(response.product.count) <= 0){
+            if (Number.parseInt(response.product.count) <= 0) {
                 document.getElementById("addToCart").disabled = true;
             }
             delete response.product.count;
@@ -51,6 +54,7 @@ $(document).ready(function () {
             delete response.product.price;
             delete response.product.productId;
             delete response.product.productName;
+            delete response.product.date;
             delete response.product.productType;
             delete response.product.rebate;
             delete response.product.soldOut;
@@ -63,7 +67,7 @@ $(document).ready(function () {
             }
             for (let key in response.categories) {
                 let $option = $("<option/>");
-                $option.attr("value",response.categories[key].categoryName);
+                $option.attr("value", response.categories[key].categoryName);
                 $option.text(response.categories[key].categoryName);
                 $("#productCategory").append($option);
             }
@@ -75,16 +79,16 @@ $("#productCategory").change(function () {
     let categoryName = this.options[this.selectedIndex].getAttribute("value");
     let productName = getProductName();
     let params = {
-        productName:productName,
+        productName: productName,
         categoryName: categoryName
     };
-    if (categoryName != "default"){
+    if (categoryName != "default") {
         $.ajax({
-            url:"/changeProductCategory",
-            method:"post",
-            contentType:"application/json",
-            data:JSON.stringify(params),
-            success:function () {
+            url: "/changeProductCategory",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify(params),
+            success: function () {
                 console.log("here");
             }
         });
@@ -186,6 +190,7 @@ $("#addToCart").click(function () {
     });
 });
 $(window).bind('beforeunload', function () {
+    // deletePageableInfoFromSession();
     return disconnect();
 });
 
@@ -238,11 +243,12 @@ $(document).on("click", ".buttonInInputWindow", function () {
         data: JSON.stringify(params),
         success: function (response) {
             $(".inputWindow").remove();
-            if (key == "productName"){
-                var url = "localhost8080:/product-".concat(val);
-                window.location.href = url;
+            if (key == "productName") {
+                var url = "localhost:8080/product-"+val;
+                console.log(url);
+                $(location).attr('href',url);
             }else {
-                window.location.reload();
+                window.location.reload(true);
             }
         }
     });
@@ -250,12 +256,12 @@ $(document).on("click", ".buttonInInputWindow", function () {
 $(document).on("click", ".closeInputWindow", function () {
     $(".inputWindow").remove();
 });
-$(document).on("dblclick","#productImagesContainer img",function () {
+$(document).on("dblclick", "#productImagesContainer img", function () {
     let img = $(this).attr("src");
     $.ajax({
-        url:"/deleteProductImg",
-        method:"post",
-        contentType:"plain/text",
+        url: "/deleteProductImg",
+        method: "post",
+        contentType: "plain/text",
         data: img
     });
     $(this).remove();

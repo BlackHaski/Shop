@@ -16,6 +16,12 @@
                         Edit Profile
                     </a>
                 </li>
+                <li class="aside-nav-li mar0-pad0">
+                    <a id="userArchiveProducts"
+                       class="link width90p margin-0 padding-l-10p float-r font-size-14px text-decor-none color-white bg-black">
+                        Purchased goods
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>

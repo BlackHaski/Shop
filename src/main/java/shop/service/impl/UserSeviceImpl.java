@@ -33,6 +33,11 @@ public class UserSeviceImpl implements UserService,UserDetailsService {
         return userDAO.findAll();
     }
 
+    @Override
+    public User findByUsernameAndEmail(String username, String email) {
+        return userDAO.findByUsernameAndEmail(username,email);
+    }
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDAO.findByUsername(username);
     }

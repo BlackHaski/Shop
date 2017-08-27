@@ -69,7 +69,8 @@ $(document).on("change","input[type = file]",function () {
     let $span = $("<span/>");
     $span.addClass("float-r");
     $span.text("x");
-    $container.append($span);
+    let parent = $(this).parent();
+    parent.append($span);
     $($container).insertBefore($("#createProductBtn"));
 });
 $(document).on("click","span",function () {

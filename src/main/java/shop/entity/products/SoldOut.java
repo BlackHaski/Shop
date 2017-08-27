@@ -1,5 +1,6 @@
 package shop.entity.products;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import shop.entity.security.User;
 
@@ -16,6 +17,7 @@ public class SoldOut {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSoldOutProduct;
     private int count;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
     private User user;
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.DETACH)

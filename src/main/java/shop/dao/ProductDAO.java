@@ -1,5 +1,7 @@
 package shop.dao;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,9 +22,13 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
     @Query("from Product p where p.category.categoryName=:categoryName")
     List<Product> findAllByCategoryName(@Param("categoryName") String categoryName);
 
+    Page<Product> findAllByCategoryCategoryName(String categoryName, Pageable pageable);
+
     Product findByProductName(String productName);
 
     List<Product> findAllByProductNameIsContaining(String productName);
+
+    Page<Product> findAllByProductNameIsContaining(String productName, Pageable pageable);
 
     void deleteByProductName(String productName);
 

@@ -25,21 +25,24 @@ $("#sendComment").click(function () {
     };
     if (username == "" || username == null)
         showPopupWindow();
-    else
-    stopmClient.send("/app/comment", {}, JSON.stringify(params));
+    else if ($("#commentText").val().length>0 && $("#commentText").val().split(' ').join("").length>0) {
+        $("#commentText").val("");
+        stopmClient.send("/app/comment", {}, JSON.stringify(params));
+    }
 });
 
 function showComment(res) {
-    let commentBlock = $("div[name = 'comment']").first().clone(true, true);
-    $(commentBlock).children("h2").text(res.username);
-    $(commentBlock).children("h2").attr("data-idcomment",res.commentId);
-    let children = $(commentBlock).children("p");
-    $(children[0]).text(res.comment);
-    $(children[1]).text(res.date);
-    $(children[1]).append();
-    $("#commentsBlock").append(commentBlock);
+    // let commentBlock = $("div[name = 'comment']").first().clone(true, true);
+    // $(commentBlock).children("h2").text(res.username);
+    // $(commentBlock).children("h2").attr("data-idcomment",res.commentId);
+    // let children = $(commentBlock).children("p");
+    // $(children[0]).text(res.comment);
+    // $(children[1]).text(res.date);
+    // $(children[1]).append();
+    // $("#commentsBlock").append(commentBlock);
+    window.location.reload(true);
 }
-$(document).on("dblclick","div [name = 'comment'] h2",function () {
+$(document).on("dblclick","div [name = 'comment'] p[name='commentMessage']",function () {
     $(this).parent().remove();
     $.ajax({
         url: "/deleteComment",

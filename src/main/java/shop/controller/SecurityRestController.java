@@ -23,7 +23,7 @@ public class SecurityRestController {
         String username = params.get(0);
         String email = params.get(1);
 
-        User user = (User)userService.loadUserByUsername(username);
+        User user = userService.findByUsernameAndEmail(username,email);
         if (user != null){
             if (user.getUsername().equals(username) && user.getEmail().equals(email)) {
                 int code = (int) (Math.random()*100000);

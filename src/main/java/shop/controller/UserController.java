@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import shop.entity.security.User;
+import shop.service.SoldOutService;
 import shop.service.UserInfoService;
 import shop.service.UserService;
 
@@ -23,6 +24,8 @@ public class UserController {
     UserInfoService userInfoService;
     @Autowired
     UserService userService;
+    @Autowired
+    SoldOutService soldOutService;
 
     @GetMapping("/cabinet/profile")
     public String getProfile() {
@@ -32,6 +35,11 @@ public class UserController {
     @GetMapping("/cabinet/editProfile")
     public String getEditPage() {
         return "/cabinet/editProfile";
+    }
+
+    @GetMapping("/cabinet/purchasedGoods")
+    public String getPurchasedGoods() {
+        return "/cabinet/purchasedGoods";
     }
 
     @PostMapping("/changeAvatar")

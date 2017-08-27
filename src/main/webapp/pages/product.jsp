@@ -16,19 +16,22 @@
             </p>
             <div id="productImagesContainer" class="width100p margin-top-510px text-align-c">
                     <img width="12%" class="margin-l-2p margin-r-2p" height="67px">
-                <form action="/addImgToProduct" method="post" enctype="multipart/form-data">
-                    <input name="img" type="file">
-                    <input type="submit">
-                    <input type="hidden"
-                                       name="${_csrf.parameterName}"
-                                       value="${_csrf.token}">
-                </form>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <form action="/addImgToProduct" method="post" enctype="multipart/form-data">
+                        <input name="img" type="file">
+                        <input type="submit">
+                        <input type="hidden"
+                                           name="${_csrf.parameterName}"
+                                           value="${_csrf.token}">
+                    </form>
+                </sec:authorize>
             </div>
         </div>
         <div class="margin-l-2p float-l width34p">
             <div id="prodInfo" class="float-l margin-l-2p">
                 <h1 id="productNameH" class="color-white"></h1>
                 <h2 id="productPriceH" class="color-green"></h2>
+                <p id="addedDate" class="color-white"></p>
                 <sec:authorize access="hasRole('ADMIN')">
                     <select id="productCategory">
                         <option value="default">Select category</option>
@@ -61,12 +64,18 @@
             ${comm.date}
         </p>
     </div>
+    <div class="clear-b padding-l-10p margin-l--2p">
+        <c:forEach var="page" step="${1}" begin="${1}" end="${pages}">
+            <a href="/page?number=${page}" class="float-l margin-l-2p text-decor-none color-white">${page}</a>
+        </c:forEach>
+    </div>
     <c:forEach var="comm" items="${comments}">
-        <div name="comment" class="margin-auto clear-b height-auto width80p">
-            <h2 name="usernameCommentator" data-idcomment="${comm.commentId}" class="float-l width20p color-green">
+        <div name="comment" class="margin-auto margin-top-30px clear-b height-auto width80p">
+            <a href="/cabinet-${comm.user.username}" name="usernameCommentator"
+               class="float-l font-size-20px width20p padding-t-b-2p color-green text-decor-none">
                     ${comm.user.username}
-            </h2>
-            <p name="commentMessage" class="float-l width60p font-size-18px color-gray">
+            </a>
+            <p name="commentMessage" class="float-l width60p font-size-18px color-gray"  data-idcomment="${comm.commentId}">
                     ${comm.text}
             </p>
             <p name="timeComment" class="float-r text-align-r width10p color-white">

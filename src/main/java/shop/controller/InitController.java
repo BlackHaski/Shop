@@ -1,6 +1,8 @@
 package shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import shop.service.ProductService;
 import shop.service.RatingService;
 import shop.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,7 @@ public class InitController {
     CommentService commentService;
     @Autowired
     RatingService ratingService;
+    private static int pageSize = 5;
 
     @GetMapping("/")
     public String start() {
@@ -65,23 +69,42 @@ public class InitController {
     }
 
     @GetMapping("/product-{productName}")
-    public String product(@PathVariable String productName, Model model) {
-        Product product = productService.findByProductName(String.valueOf(productName));
-        List<Rating> ratings = ratingService.findAllByProductWithUser(product);
-        List<Comment> comments = commentService.findAllByProductWithUser(product);
+    public String product(@PathVariable String productName,
+                          Model model,
+                          HttpSession httpSession) {
+        Integer page = (Integer) httpSession.getAttribute("page");
+        if (page == null) page = 0;
 
-        int pos = 0;
-        int neg = 0;
-        for (Rating rating : ratings) {
-            if (rating.isRating())
-                pos++;
-            else neg++;
+        Product product = productService.findByProductName(String.valueOf(productName));
+        if (product != null) {
+            List<Rating> ratings = ratingService.findAllByProductWithUser(product);
+            Page<Comment> comments = commentService.findAllByProductWithUser(product, new PageRequest(page, pageSize));
+
+            int pos = 0;
+            int neg = 0;
+            for (Rating rating : ratings) {
+                if (rating.isRating())
+                    pos++;
+                else neg++;
+            }
+            model.addAttribute("posRating", pos);
+            model.addAttribute("negRating", neg);
+            model.addAttribute("comments", comments.getContent());
+            model.addAttribute("pages", comments.getTotalPages());
+            return "product";
         }
-        model.addAttribute("posRating", pos);
-        model.addAttribute("negRating", neg);
-        model.addAttribute("comments", comments);
-        return "product";
+        return "cabinet/emptyCabinet";
     }
+
+//    @PostMapping("/deletePageableInfoFromSession")
+//    public void deletePageableInfoFromSession(HttpSession httpSession,
+//                                              HttpRequest httpRequest) {
+//        System.out.println(httpRequest);
+//        System.out.println(httpRequest.getURI());
+//        System.out.println(httpRequest.getHeaders());
+//        httpSession.removeAttribute("key");
+//        httpSession.removeAttribute("page");
+//    }
 
     @GetMapping("/shopcart")
     public String shopcart(Model model) {

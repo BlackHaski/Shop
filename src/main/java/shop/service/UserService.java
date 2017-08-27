@@ -17,6 +17,8 @@ public interface UserService {
 
     UserDetails loadUserByUsername(String username);
 
+    User findByUsernameAndEmail(String username,String email);
+
     User findByUsernameWithDetails(String username);
 
     void updateUserPassword(String username, String newPass);

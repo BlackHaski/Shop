@@ -12,15 +12,15 @@
             </div>
             <form action="/regUser" method="post" class="contactForm margin-auto width79p">
                 <h2 class="headInp">Name</h2>
-                <input name="username" type="text" class="float-l width100p">
+                <input required name="username" type="text" class="float-l width100p">
                 <h2 class="headInp clear-b">Email Address</h2>
-                <input name="email" type="text" class="width100p">
+                <input required name="email" type="text" class="width100p">
                 <h2 class="headInp clear-b">Birthday</h2>
-                <input name="birthday" type="date" class="width100p">
+                <input required name="birthday" type="date" class="width100p">
                 <h2 class="headInp clear-b">Password</h2>
-                <input name="password" type="password" class="width100p">
+                <input required name="password" type="password" class="width100p">
                 <h2 class="headInp clear-b">Check Password</h2>
-                <input name="checkPassword" type="password" class="width100p">
+                <input required name="checkPassword" type="password" class="width100p">
                 <div class="text-align-c">
                     <input type="submit" value="SIGN UP">
                 </div>
@@ -40,9 +40,9 @@
         </div>
         <form method="post" class="contactForm margin-auto width79p">
             <h2 class="headInp clear-b">Username</h2>
-            <input name="username" class="float-l width100p" type="text">
+            <input required name="username" class="float-l width100p" type="text">
             <h2 class="headInp clear-b">Password</h2>
-            <input name="password" class="float-l width100p" type="password">
+            <input required name="password" class="float-l width100p" type="password">
             <div class="text-align-c">
                 <input type="submit" value="SIGN IN">
             </div>

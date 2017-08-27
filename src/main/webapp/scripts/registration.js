@@ -23,7 +23,7 @@ $("#sendRecover").click(function () {
         data: jsonArr,
         success: function (code) {
             if (code == 0)
-                alert("User is not Exist!")
+                alert("User is not Exist!");
             else {
                 realCode = code;
                 $(".headContact h1").text("Enter Code!");
@@ -38,9 +38,9 @@ $("#sendRecover").click(function () {
     });
 });
 
-$(document).on("click","#sendCode",function () {
+$(document).on("click", "#sendCode", function () {
     let inpCode = $("#code").val();
-    if (inpCode == realCode){
+    if (inpCode == realCode) {
         $(".headContact h1").text("Enter new Password!");
         $("#recoverPass").empty();
         $("#recoverPass").html("<h2 class=\"headInp clear-b\">New Password</h2>\n" +
@@ -52,32 +52,28 @@ $(document).on("click","#sendCode",function () {
             "</div>");
     }
     else alert("bad");
-    console.log(realCode," ",inpCode)
+    console.log(realCode, " ", inpCode)
 });
 
-$(document).on("click","#changePass",function () {
+$(document).on("click", "#changePass", function () {
     let pass = $("#newPass").val();
     let checkPass = $("#checkNewPassword").val();
-    let params = new Array();
-    params.push(pass);
-    params.push(usrnm);
-    // params.push(checkPass);
-    let jsonParams = JSON.stringify(params);
-    alert(jsonParams);
-
-    $.ajax({
-        url: "/changePassword",
-        method: "post",
-        contentType: "application/json",
-        data: jsonParams,
-        success: function () {
-            $("#recoverPass").empty();
-            $("#recoverPass").html("<div class=\"headContact width50p margin-auto text-align-c\">\n" +
-                "                <h1 class=\"color-white\">Sign up</h1>\n" +
-                "                <p>\n" +
-                "                    Done" +
-                "                </p>\n" +
-                "            </div>");
-        }
-    });
+    if (pass == checkPass) {
+        let params = new Array();
+        params.push(pass);
+        params.push(usrnm);
+        let jsonParams = JSON.stringify(params);
+        $.ajax({
+            url: "/changePassword",
+            method: "post",
+            contentType: "application/json",
+            data: jsonParams,
+            success: function () {
+                $("#recoverPass").empty();
+                $("#recoverPass").html("<p>"+"Done"+"</p>");
+            }
+        });
+    } else {
+        alert("Password != checkPassword");
+    }
 });

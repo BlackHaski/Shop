@@ -64,3 +64,10 @@ function getProductName() {
     let nameProduct = pathname.substring(pathname.indexOf('-') + 1);
     return nameProduct;
 }
+
+// function deletePageableInfoFromSession() {
+//     $.ajax({
+//         url:"/deletePageableInfoFromSession",
+//         method:"post"
+//     });
+// }

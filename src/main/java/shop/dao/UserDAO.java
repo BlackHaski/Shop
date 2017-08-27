@@ -12,6 +12,8 @@ import shop.entity.security.User;
 public interface UserDAO extends JpaRepository<User, Integer> {
     User findByUsername(String username);
 
+    User findByUsernameAndEmail(String username,String email);
+
     @Query("from User u join fetch u.userInfo where u.username=:name")
     User findByUsernameWithDetails(@Param("name") String username);
 

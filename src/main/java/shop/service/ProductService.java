@@ -1,5 +1,7 @@
 package shop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import shop.entity.Category;
 import shop.entity.products.Product;
 
@@ -14,9 +16,13 @@ public interface ProductService {
 
     List<Product> findAllByCategoryName(String categoryName);
 
+    Page<Product> findAllByCategoryCategoryName(String categoryName, Pageable pageable);
+
     Product findByProductName(String productName);
 
     List<Product> findAllByProductNameIsContaining(String productName);
+
+    Page<Product> findAllByProductNameIsContaining(String productName, Pageable pageable);
 
     void deleteByProductName(String productName);
 
